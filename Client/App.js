@@ -8,7 +8,8 @@ class App extends React.Component {
     return (
       <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
         <Searchbox />
-        <Carousel/>
+        <Carousel title="Favorites" />
+        <Carousel title="Playlists" />
       </LinearGradient>
     );
   }
