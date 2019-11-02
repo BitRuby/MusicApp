@@ -32,8 +32,8 @@ const Carousel = props => {
     },
   ]);
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-      <View>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={true}>
+      <View style={styles.view}>
         <Text style={styles.text}>{props.title}</Text>
       </View>
       {list.map((el, i) => (

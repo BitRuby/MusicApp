@@ -1,12 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  view: {},
   text: {
-    color: '#FB266E',
+    color: '#FFF',
     fontFamily: 'leagueSpartan',
-    fontSize: 15,
+    fontSize: 14,
     textTransform: 'uppercase',
-    transform: [{rotate: '-90deg'}, {translateX: -60}],
+    transform: [{rotate: '-90deg'}, {translateX: -45}],
   },
 });
 
