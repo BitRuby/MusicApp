@@ -8,9 +8,9 @@ class App extends React.Component {
   render() {
     return (
       <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
-        {/* <Dashboard /> */}
+        <Dashboard />
         {/* <Player /> */}
-        <Favorites />
+        {/* <Favorites /> */}
       </LinearGradient>
     );
   }

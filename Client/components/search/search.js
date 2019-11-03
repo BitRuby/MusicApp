@@ -1,10 +1,21 @@
 import React from 'react';
-
-class Search extends React.Component {
-  render() {
-    return <React.Fragment></React.Fragment>;
-  }
-}
+import {Text, View} from 'react-native';
+import styles from './search.style';
+import Element from '../element/element';
+const Search = props => {
+  return (
+    <View>
+      {props.value ? null : (
+        <View>
+          <Text style={styles.title}>Ostatnio wyszukiwane</Text>
+          {list.map((el, i) => (
+            <Element key={i} el={el} />
+          ))}
+        </View>
+      )}
+    </View>
+  );
+};
 
 //Add PropTypes, DefaultValues, Redux, StyleSheet
 

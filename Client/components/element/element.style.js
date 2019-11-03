@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 60,
+    paddingHorizontal: 30,
     paddingVertical: 10,
   },
   artist: {

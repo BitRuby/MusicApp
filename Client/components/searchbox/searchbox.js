@@ -1,27 +1,29 @@
 import React from 'react';
-import {TextInput, View} from 'react-native';
+import {TextInput, View, Keyboard} from 'react-native';
 import styles from './searchbox.style';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const Searchbox = () => {
-  const [value, onChange] = React.useState('');
-  const [active, onActive] = React.useState(true);
-
+const Searchbox = props => {
+  const onBack = () => {
+    props.onFocus(false);
+    Keyboard.dismiss();
+    props.onChange('');
+  };
   return (
     <View style={styles.view}>
-      {active ? (
+      {props.focused ? (
         <Icon
           name="arrow-left"
-          onPress={() => onActive()}
+          onPress={() => onBack()}
           size={24}
           style={styles.iconBack}
           color="#B8B8B8"
         />
       ) : null}
-      {value.length > 0 ? (
+      {props.value.length > 0 ? (
         <Icon
           name="times"
-          onPress={() => onChange('')}
+          onPress={() => props.onChange('')}
           size={24}
           style={styles.icon}
           color="#B8B8B8"
@@ -31,8 +33,12 @@ const Searchbox = () => {
       )}
       <TextInput
         style={styles.textInput}
-        value={value}
-        onChangeText={text => onChange(text)}
+        value={props.value}
+        onSubmitEditing={() => {
+          Keyboard.dismiss();
+        }}
+        onFocus={() => props.onFocus(true)}
+        onChangeText={text => props.onChange(text)}
         placeholder="Wyszukiwarka utworów"
         placeholderTextColor="#B8B8B8"></TextInput>
     </View>
