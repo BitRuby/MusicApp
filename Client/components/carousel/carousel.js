@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import Album from '../album/album';
 import styles from './carousel.style';
-
 const Carousel = props => {
   [list, setList] = React.useState([
     {
@@ -32,7 +31,10 @@ const Carousel = props => {
     },
   ]);
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={true}>
+    <ScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      bounces={true}>
       <View style={styles.view}>
         <Text style={styles.text}>{props.title}</Text>
       </View>

@@ -3,6 +3,8 @@ import {View, Text, Image} from 'react-native';
 import styles from './favorites.style';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Element from '../element/element';
+import LinearGradient from 'react-native-linear-gradient';
+
 const Favorites = props => {
   const [favIno, setFavIno] = React.useState({
     coverUrl: require('../../assets/images/1.jpg'),
@@ -41,7 +43,7 @@ const Favorites = props => {
     },
   ]);
   return (
-    <View>
+    <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
       <Image source={favIno.coverUrl} style={styles.cover}></Image>
       <View style={styles.innerFrame}></View>
       <View style={styles.headerIcon}>
@@ -54,7 +56,7 @@ const Favorites = props => {
       {list.map((el, i) => (
         <Element key={i} el={el} />
       ))}
-    </View>
+    </LinearGradient>
   );
 };
 
