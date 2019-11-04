@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   favorites: [],
+  playlist: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: action.favorites,
+      };
+    case actionTypes.SET_PLAYLIST:
+      return {
+        ...state,
+        playlist: action.playlist,
       };
     default:
       return state;

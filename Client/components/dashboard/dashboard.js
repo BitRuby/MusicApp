@@ -6,9 +6,15 @@ import PlayerWidget from '../player-widget/player-widget';
 import styles from './dashboard.style';
 import Search from '../search/search';
 import LinearGradient from 'react-native-linear-gradient';
-const Dashboard = () => {
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/index';
+
+const Dashboard = props => {
   const [focused, onFocus] = React.useState(false);
   const [value, onChange] = React.useState('');
+  React.useEffect(() => {
+    props.onInit();
+  });
   return (
     <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
       <View style={styles.view}>
@@ -22,8 +28,8 @@ const Dashboard = () => {
           <Search value={value} onChange={onChange} />
         ) : (
           <View style={{flex: 1}}>
-            <Carousel title="Playlisty" />
-            <Carousel title="Ulubione" />
+            <Carousel title="Playlisty" list={props.playlist} />
+            <Carousel title="Ulubione" list={props.playlist} />
             <PlayerWidget title={'Whatsername'} artist={'Green Day'} />
           </View>
         )}
@@ -33,5 +39,19 @@ const Dashboard = () => {
 };
 
 //Add PropTypes, DefaultValues, Redux, StyleSheet
+const mapStateToProps = state => {
+  return {
+    playlist: state.playlist,
+  };
+};
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => {
+  return {
+    onInit: () => dispatch(actions.initPlaylist()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Dashboard);

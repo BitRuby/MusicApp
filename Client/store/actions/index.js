@@ -1,1 +1,6 @@
-export {initFavorites, setFavorites} from './favorites';
+export {
+  initFavorites,
+  setFavorites,
+  initPlaylist,
+  setPlaylist,
+} from './favorites';
