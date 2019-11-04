@@ -22,7 +22,7 @@ const Dashboard = () => {
           <Search value={value} onChange={onChange} />
         ) : (
           <View style={{flex: 1}}>
-            <Carousel title="Playlisty" onP />
+            <Carousel title="Playlisty" />
             <Carousel title="Ulubione" />
             <PlayerWidget title={'Whatsername'} artist={'Green Day'} />
           </View>

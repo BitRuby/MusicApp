@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     paddingVertical: height / 24,
   },
   headerText: {
-    paddingHorizontal: 60,
+    paddingHorizontal: 30,
     paddingVertical: height / 20,
   },
   title: {
