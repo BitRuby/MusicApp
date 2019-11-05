@@ -14,7 +14,7 @@ const Dashboard = props => {
   const [value, onChange] = React.useState('');
   React.useEffect(() => {
     props.onInit();
-  });
+  }, []);
   return (
     <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
       <View style={styles.view}>

@@ -13,7 +13,7 @@ const Favorites = props => {
   });
   React.useEffect(() => {
     props.onInit();
-  });
+  },[]);
   return (
     <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
       <Image source={favIno.coverUrl} style={styles.cover}></Image>

@@ -3,6 +3,7 @@ import {Text, View} from 'react-native';
 import styles from './search.style';
 import Element from '../element/element';
 const Search = props => {
+  const list = [];
   return (
     <View>
       {props.value ? null : (
