@@ -1,8 +1,7 @@
-export {
-  initFavorites,
-  setFavorites,
-  initPlaylist,
-  setPlaylist,
-  initTracklist,
-  setTracklist,
-} from './favorites';
+export {initFavorites, setFavorites} from './favorites';
+
+export {initTracklist, setTracklist} from './tracklist';
+
+export {initPlaylist, setPlaylist} from './playlist';
+
+export {search, setSerach} from './search';

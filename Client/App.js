@@ -15,8 +15,8 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Stack key="root" hideNavBar={true}>
-          <Scene key="dashboard" component={Dashboard} />
-          <Scene key="player" component={Player} initial />
+          <Scene key="dashboard" component={Dashboard} initial />
+          <Scene key="player" component={Player} />
           <Scene key="favorites" component={Favorites} />
         </Stack>
       </Router>

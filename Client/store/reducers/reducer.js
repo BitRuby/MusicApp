@@ -4,6 +4,7 @@ const initialState = {
   favorites: [],
   playlist: [],
   tracklist: [],
+  search: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         tracklist: action.tracklist,
+      };
+    case actionTypes.SET_SEARCH:
+      return {
+        ...state,
+        search: action.search,
       };
     default:
       return state;
