@@ -3,4 +3,6 @@ export {
   setFavorites,
   initPlaylist,
   setPlaylist,
+  initTracklist,
+  setTracklist,
 } from './favorites';

@@ -7,7 +7,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import Dashboard from './components/dashboard/dashboard';
 import Player from './components/player/player';
 import Favorites from './components/favorites/favorites';
-import reducer from './store/reducers/favorites';
+import reducer from './store/reducers/reducer';
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 const App = () => {
@@ -16,8 +16,8 @@ const App = () => {
       <Router>
         <Stack key="root" hideNavBar={true}>
           <Scene key="dashboard" component={Dashboard} />
-          <Scene key="player" component={Player} />
-          <Scene key="favorites" component={Favorites} initial />
+          <Scene key="player" component={Player} initial />
+          <Scene key="favorites" component={Favorites} />
         </Stack>
       </Router>
     </Provider>
