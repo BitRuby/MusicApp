@@ -12,14 +12,12 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FFF',
-    fontFamily: 'leagueSpartan',
     fontSize: 15,
     padding: 13,
     paddingBottom: 0,
   },
   artist: {
     color: '#B8B8B8',
-    fontFamily: 'leagueSpartan',
     fontSize: 11,
     paddingHorizontal: 13,
     paddingVertical: 0,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, View, Keyboard} from 'react-native';
 import styles from './searchbox.style';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { FontAwesome } from '@expo/vector-icons';
 
 const Searchbox = props => {
   const onBack = () => {
@@ -12,7 +12,7 @@ const Searchbox = props => {
   return (
     <View style={styles.view}>
       {props.focused ? (
-        <Icon
+        <FontAwesome
           name="arrow-left"
           onPress={() => onBack()}
           size={24}
@@ -21,7 +21,7 @@ const Searchbox = props => {
         />
       ) : null}
       {props.value.length > 0 ? (
-        <Icon
+        <FontAwesome
           name="times"
           onPress={() => props.onChange('')}
           size={24}
@@ -29,7 +29,7 @@ const Searchbox = props => {
           color="#B8B8B8"
         />
       ) : (
-        <Icon name="search" size={20} style={styles.icon} color="#B8B8B8" />
+        <FontAwesome name="search" size={20} style={styles.icon} color="#B8B8B8" />
       )}
       <TextInput
         style={styles.textInput}

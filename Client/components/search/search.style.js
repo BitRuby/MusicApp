@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 10,
     color: '#fff',
-    fontFamily: 'leagueSpartan',
     fontSize: 16,
   },
 });

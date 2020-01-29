@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFF',
     fontSize: 12,
-    fontFamily: 'leagueSpartan',
   },
   player: {
     display: 'flex',

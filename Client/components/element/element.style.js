@@ -11,17 +11,14 @@ const styles = StyleSheet.create({
   artist: {
     color: '#B8B8B8',
     fontSize: 12,
-    fontFamily: 'leagueSpartan',
   },
   title: {
     color: '#FB266E',
     fontSize: 18,
-    fontFamily: 'leagueSpartan',
   },
   duration: {
     color: '#fff',
     fontSize: 13,
-    fontFamily: 'leagueSpartan',
   },
 });
 

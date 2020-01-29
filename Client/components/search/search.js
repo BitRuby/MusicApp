@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import styles from './search.style';
 import Element from '../element/element';
 import {connect} from 'react-redux';
@@ -20,12 +20,12 @@ const Search = props => {
           ))}
         </View>
       ) : (
-        <View>
+        <ScrollView vertical={true}>
           <Text style={styles.title}>Ostatnio wyszukiwane</Text>
           {list.map((el, i) => (
             <Element key={i} el={el} />
           ))}
-        </View>
+        </ScrollView>
       )}
     </View>
   );

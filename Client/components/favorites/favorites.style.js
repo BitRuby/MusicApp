@@ -13,12 +13,10 @@ const styles = StyleSheet.create({
   title: {
     color: '#FFF',
     fontSize: 21,
-    fontFamily: 'leagueSpartan',
   },
   subtitle: {
     color: '#FFF',
     fontSize: 14,
-    fontFamily: 'leagueSpartan',
   },
   innerFrame: {
     position: 'absolute',

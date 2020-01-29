@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   textInput: {
-    fontFamily: 'leagueSpartan',
     flex: 1,
     padding: 10,
     paddingLeft: 50,

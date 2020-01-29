@@ -1,11 +1,10 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import Searchbox from '../searchbox/searchbox';
 import Carousel from '../carousel/carousel';
 import PlayerWidget from '../player-widget/player-widget';
 import styles from './dashboard.style';
 import Search from '../search/search';
-import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
 
@@ -16,7 +15,7 @@ const Dashboard = props => {
     props.onInit();
   }, []);
   return (
-    <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#2f3640'}}>
       <View style={styles.view}>
         <Searchbox
           focused={focused}
@@ -28,13 +27,15 @@ const Dashboard = props => {
           <Search value={value} onChange={onChange} />
         ) : (
           <View style={{flex: 1}}>
+          <ScrollView vertical={true}>
             <Carousel title="Playlisty" list={props.playlist} />
             <Carousel title="Ulubione" list={props.playlist} />
-            <PlayerWidget title={'Whatsername'} artist={'Green Day'} />
+          </ScrollView>
+         <PlayerWidget title={'Whatsername'} artist={'Green Day'} />
           </View>
         )}
       </View>
-    </LinearGradient>
+    </View>
   );
 };
 

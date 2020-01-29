@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import styles from './player-widget.style';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import {FontAwesome} from '@expo/vector-icons';
 
 const PlayerWidget = props => {
   return (
@@ -12,11 +12,11 @@ const PlayerWidget = props => {
         </Text>
       </View>
       <View style={styles.player}>
-        <Icon name="sync" size={20} color="#000" />
-        <Icon name="step-backward" size={20} color="#000" />
-        <Icon name="play" size={20} color="#000" />
-        <Icon name="step-forward" size={20} color="#000" />
-        <Icon name="random" size={20} color="#000" />
+        <FontAwesome name="refresh" size={20} color="white" />
+        <FontAwesome name="backward" size={20} color="white" />
+        <FontAwesome name="play" size={20} color="white" />
+        <FontAwesome name="forward" size={20} color="white" />
+        <FontAwesome name="random" size={20} color="white" />
       </View>
     </View>
   );

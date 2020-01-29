@@ -1,20 +1,16 @@
 import {StyleSheet, Dimensions} from 'react-native';
 const width = Dimensions.get('window').width;
-const font = 'leagueSpartan';
 const styles = StyleSheet.create({
   header: {
     color: '#fff',
-    fontFamily: font,
     fontSize: 11,
   },
   timelapse: {
     color: '#fff',
-    fontFamily: font,
     fontSize: 13,
   },
   album: {
     color: '#fff',
-    fontFamily: font,
     fontSize: 15,
     paddingBottom: 20,
     color: '#fff',
@@ -59,12 +55,11 @@ const styles = StyleSheet.create({
   title: {
     color: '#FFF',
     fontSize: 20,
-    fontFamily: font,
   },
   artist: {
     color: '#909090',
     fontSize: 14,
-    fontFamily: font,
+
   },
   heartIcon: {
     borderWidth: 1,

@@ -1,9 +1,8 @@
 import React from 'react';
 import {View, Text, Image, ScrollView} from 'react-native';
 import styles from './favorites.style';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Ionicons } from '@expo/vector-icons';
 import Element from '../element/element';
-import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
 const Favorites = props => {
@@ -15,11 +14,11 @@ const Favorites = props => {
     props.onInit();
   },[]);
   return (
-    <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#2f3640'}}>
       <Image source={favIno.coverUrl} style={styles.cover}></Image>
       <View style={styles.innerFrame}></View>
       <View style={styles.headerIcon}>
-        <Icon name="arrow-left" size={20} color="#FFF" />
+        <Ionicons name="arrow-left" size={20} color="#FFF" />
       </View>
       <View style={styles.headerText}>
         <Text style={styles.title}>Ulubione</Text>
@@ -30,7 +29,7 @@ const Favorites = props => {
           <Element key={i} el={el} />
         ))}
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 };
 

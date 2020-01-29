@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './player.style';
 import {View, Text, Image, Slider, ScrollView, Dimensions} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
+import { Ionicons } from '@expo/vector-icons';
 
 const Player = props => {
   const width = Dimensions.get('window').width;
@@ -32,7 +31,7 @@ const Player = props => {
   };
   const [value, onChange] = React.useState(60);
   return props.tracklist.length > 0 ? (
-    <LinearGradient colors={['#1A1A1A', '#3B3B3B']} style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#2f3640'}}>
       <View style={styles.view}>
         <Text style={styles.header}>Odtwarzanie z albumu</Text>
         <Text style={styles.album}>{props.tracklist[play].album}</Text>
@@ -65,7 +64,7 @@ const Player = props => {
             </ScrollView>
           </View>
           <View>
-            <Icon
+            <Ionicons
               name="heart"
               style={styles.heartIcon}
               size={18}
@@ -88,14 +87,14 @@ const Player = props => {
           value={value}
         />
         <View style={styles.playerIcons}>
-          <Icon name="sync" size={20} color="#fff" />
-          <Icon onPress={prev} name="step-backward" size={20} color="#fff" />
-          <Icon name="play" style={styles.playIcon} size={20} color="#fff" />
-          <Icon onPress={next} name="step-forward" size={20} color="#fff" />
-          <Icon name="random" size={20} color="#fff" />
+          <Ionicons name="md-sync" size={20} color="white" />
+          <Ionicons name="stepbackward" size={20} color="white" />
+          <Ionicons name="play" size={20} color="white" />
+          <Ionicons name="stepforward" size={20} color="white" />
+          <Ionicons name="random" size={20} color="white" />
         </View>
       </View>
-    </LinearGradient>
+    </View>
   ) : null;
 };
 
