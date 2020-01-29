@@ -2,6 +2,8 @@ package com.musicapp.serwer.controlers;
 
 import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
+import com.musicapp.serwer.services.FavoriteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,9 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("api")
 public class API {
+
+    @Autowired
+    private FavoriteService favoriteService;
 
     @Value("${token}")
     private String token;
@@ -199,6 +204,12 @@ public class API {
             return ResponseEntity.status(404).body(json);
         }
         return ResponseEntity.ok(json);
+    }
+
+
+    @PostMapping(path = "/test")
+    public void test(){
+        favoriteService.addTrack("4fda3443rfasd","dsadas434");
     }
 
 

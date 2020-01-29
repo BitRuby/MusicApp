@@ -3,13 +3,23 @@ package com.musicapp.serwer.model.response;
 public class FavoriteRes {
     private long id;
     private String trackID;
+    private String artistID;
 
     public FavoriteRes() {
     }
 
-    public FavoriteRes(long id, String trackID) {
-        this.id = id;
+
+    public FavoriteRes( String trackID, String artistID) {
         this.trackID = trackID;
+        this.artistID = artistID;
+    }
+
+    public String getArtistID() {
+        return artistID;
+    }
+
+    public void setArtistID(String artistID) {
+        this.artistID = artistID;
     }
 
     public long getId() {
