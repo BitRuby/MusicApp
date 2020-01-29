@@ -11,17 +11,14 @@ import java.net.URL;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 public class Utils {
-    @Value("${token}")
-    private String token;
+    private static final String token = "BQCv6P9gjuXOg8cwpQzvy1OGw-XxkBEe9WFpisAuyO6LJ3ifbTCVO8K01W_btgUHB1Er7SdAGJHkJ4XaCoQSerZq5IPAwP0pXh3r5ZVvuhD0xK1a6qok0N0qdDUSinQ9r8xEJeJze8rfDO8D2NQcSy3Rhp_L6c7_7yCC";
 
 
     public StringBuilder getResponseFromSpotify(String search) throws IOException {
-
-        //TODO chyba URL cale sie bedzie podawac
-        search = search.replaceAll(" ", "%2B");
-
-        String url = "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=" + 15;
-        URL obj = new URL(url);
+//        search = search.replaceAll(" ", "%2B");
+//        String url = "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=" + 15;
+        System.out.println(token);
+        URL obj = new URL(search);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("User-Agent", USER_AGENT);
@@ -33,7 +30,7 @@ public class Utils {
         connection.setConnectTimeout(15000);
 
         int responseCode = connection.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("\nSending 'GET' request to URL : " + search);
         System.out.println("Response Code : " + responseCode);
 
         if(responseCode == 200) {

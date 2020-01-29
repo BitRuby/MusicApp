@@ -3,6 +3,7 @@ package com.musicapp.serwer.controlers;
 import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
 import com.musicapp.serwer.services.FavoriteService;
+import com.musicapp.serwer.services.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class API {
 
     @Autowired
     private FavoriteService favoriteService;
+    @Autowired
+    private RecommendationService recommendationService;
 
-    @Value("${token}")
-    private String token;
 
     @GetMapping(path = "/playlist/{id}")
     public ResponseEntity<String> getPlaylist(@PathVariable long id){
@@ -80,7 +81,7 @@ public class API {
         int i = 0;
         for (i = 0; i < n; i++) {
             FavoriteRes returnValue = new FavoriteRes();
-            returnValue.setId(i + 1);
+
             returnValue.setTrackID("number123number"+i);
             response.add(returnValue);
         }
@@ -100,7 +101,7 @@ public class API {
         int n= 100;
         for (i = 0; i < n; i++) {
             FavoriteRes returnValue = new FavoriteRes();
-            returnValue.setId(i + 1);
+
             returnValue.setTrackID("number123number"+i);
             response.add(returnValue);
         }
@@ -192,7 +193,7 @@ public class API {
         int n = Integer.parseInt(id);
         for (i = 0; i < n; i++) {
             FavoriteRes returnValue = new FavoriteRes();
-            returnValue.setId(i + 1);
+
             returnValue.setTrackID("number123number"+i);
             response.add(returnValue);
         }
@@ -209,7 +210,15 @@ public class API {
 
     @PostMapping(path = "/test")
     public void test(){
-        favoriteService.addTrack("4fda3443rfasd","dsadas434");
+        favoriteService.addTrack("2","q");
+        favoriteService.addTrack("2","w");
+        favoriteService.addTrack("3","e");
+        favoriteService.addTrack("4","r");
+    }
+
+    @PostMapping(path = "/recommendation")
+    public void recommendation(){
+        recommendationService.getRecommendation();
     }
 
 

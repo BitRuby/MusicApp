@@ -1,7 +1,12 @@
 package com.musicapp.serwer.model.response;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class FavoriteRes {
-    private long id;
+    @Id
+    private String id;
     private String trackID;
     private String artistID;
 
@@ -22,11 +27,11 @@ public class FavoriteRes {
         this.artistID = artistID;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -14,9 +14,9 @@ public class FavoriteService {
     private FavoriteRepo favoriteRepo;
 
     public void addTrack(String track, String artist){
-        favoriteRepo.insert(new FavoriteRes(track, artist));
+        favoriteRepo.save(new FavoriteRes(track, artist));
     }
-    
+
     public List<FavoriteRes> getAll(){
         return favoriteRepo.findAll();
     }
