@@ -69,7 +69,8 @@ public class TrackService {
             result.setTrack_number(json.getLong("track_number"));
             result.setTitle(json.getString("name"));
             result.setArtist(new ArtistRes(json.getJSONArray("artists").getJSONObject(0).getString("id"), json.getJSONArray("artists").getJSONObject(0).getString("name")));
-            result.setAlbum(new AlbumRes(json.getJSONObject("album").getString("id"), json.getJSONObject("album").getString("name")));
+            result.setAlbum(new AlbumRes(json.getJSONObject("album").getString("id"), json.getJSONObject("album").getString("name"),
+                    json.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url")));
         }catch (Exception e){
             System.out.println("Dżejson się źle przepisał :/");
             System.out.println(e);

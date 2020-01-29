@@ -13,11 +13,15 @@ public class FavoriteService {
     @Autowired
     private FavoriteRepo favoriteRepo;
 
-    public void addTrack(String track, String artist){
-        favoriteRepo.save(new FavoriteRes(track, artist));
+    public void addTrack(String track){
+        favoriteRepo.save(new FavoriteRes(track));
     }
 
     public List<FavoriteRes> getAll(){
         return favoriteRepo.findAll();
+    }
+
+    public void dropAll(){
+        favoriteRepo.deleteAll();
     }
 }

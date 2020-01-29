@@ -3,13 +3,24 @@ package com.musicapp.serwer.model.response;
 public class AlbumRes {
     private String id;
     private String name;
+    private String img;
 
     public AlbumRes() {
     }
 
-    public AlbumRes(String id, String name) {
+
+    public AlbumRes(String id, String name, String img) {
         this.id = id;
         this.name = name;
+        this.img = img;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getId() {

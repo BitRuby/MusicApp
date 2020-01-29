@@ -119,7 +119,7 @@ public class API {
 
     @GetMapping(path = "/album/{id}")
     public ResponseEntity<String> getAlbum(@PathVariable String id){
-        AlbumRes returnValue = new AlbumRes(id, "O-dur C-ból");
+        AlbumRes returnValue = new AlbumRes(id, "O-dur C-ból","xxx");
         Gson gson = new Gson();
         String json = gson.toJson(returnValue);
         if(returnValue.getId().equals("0")){
@@ -144,7 +144,7 @@ public class API {
     @GetMapping(path = "/search/{name}")
     public ResponseEntity<String> getSearch(@PathVariable String name){
         ArtistRes ar = new ArtistRes( name, "Łydka Grubasa");
-        AlbumRes al = new AlbumRes(name, "O-dur C-ból");
+        AlbumRes al = new AlbumRes(name, "O-dur C-ból","ds");
         TrackRes tr =  new TrackRes();
         tr.setId(name);
         tr.setAlbum(al);
@@ -184,10 +184,29 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    @GetMapping(path = "/recommendations")
+    public ResponseEntity<String> getRecommendation() {
+        TrackRes response = recommendationService.getRecommendation();
+        String json = gson.toJson(response);
+        if (response == null) {
+            json = "Brak proponowanych utworow";
+            return ResponseEntity.status(404).body(json);
+        }
+        return ResponseEntity.ok(json);
+    }
 
-    @PostMapping(path = "/test")
-    public void test(){
-        favoriteService.addTrack("4fda3443rfasd","dsadas434");
+    @GetMapping(path = "/addTracks")
+    public void addSomeTracks(){
+        favoriteService.addTrack("63yesoRJgXT5QALryYFV0X");
+        favoriteService.addTrack("2uZVfvOK7MTjBTRICYmpso");
+        favoriteService.addTrack("3lPr8ghNDBLc2uZovNyLs9");
+        favoriteService.addTrack("5JHNg1hxZFT7TDEphhM4wj");
+        favoriteService.addTrack("0bRQiJTHxIXb45d8uwTMlG");
+        favoriteService.addTrack("4xrzG4pw9JN8BJqqjurcPs");
+    }
+    @GetMapping(path = "/dropAllTracks")
+    public void deleteAllTracks(){
+        favoriteService.dropAll();
     }
 
 

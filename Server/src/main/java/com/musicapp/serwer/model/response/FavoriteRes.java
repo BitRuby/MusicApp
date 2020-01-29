@@ -8,23 +8,14 @@ public class FavoriteRes {
     @Id
     private String id;
     private String trackID;
-    private String artistID;
+//    private String artistID;
 
     public FavoriteRes() {
     }
 
 
-    public FavoriteRes( String trackID, String artistID) {
+    public FavoriteRes( String trackID) {
         this.trackID = trackID;
-        this.artistID = artistID;
-    }
-
-    public String getArtistID() {
-        return artistID;
-    }
-
-    public void setArtistID(String artistID) {
-        this.artistID = artistID;
     }
 
     public String getId() {
