@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './player.style';
-import {View, Text, Image, Slider, ScrollView, Dimensions} from 'react-native';
+import {View, Text, Image, Slider, ScrollView, Dimensions, BackHandler} from 'react-native';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Actions } from 'react-native-router-flux';
 
 const Player = props => {
   const width = Dimensions.get('window').width;
@@ -64,7 +65,7 @@ const Player = props => {
             </ScrollView>
           </View>
           <View>
-            <Ionicons
+            <FontAwesome
               name="heart"
               style={styles.heartIcon}
               size={18}
@@ -87,11 +88,11 @@ const Player = props => {
           value={value}
         />
         <View style={styles.playerIcons}>
-          <Ionicons name="md-sync" size={20} color="white" />
-          <Ionicons name="stepbackward" size={20} color="white" />
-          <Ionicons name="play" size={20} color="white" />
-          <Ionicons name="stepforward" size={20} color="white" />
-          <Ionicons name="random" size={20} color="white" />
+          <FontAwesome name="refresh" size={20} color="white" />
+          <FontAwesome name="backward" size={20} color="white" />
+          <FontAwesome name="play" size={20} color="white" />
+          <FontAwesome name="forward" size={20} color="white" />
+          <FontAwesome name="random" size={20} color="white" />
         </View>
       </View>
     </View>

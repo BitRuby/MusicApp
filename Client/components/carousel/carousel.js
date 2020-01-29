@@ -2,7 +2,11 @@ import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import Album from '../album/album';
 import styles from './carousel.style';
+import { Actions } from 'react-native-router-flux';
 const Carousel = props => {
+  const goToPlayer = () => {
+    Actions.player();
+  }
   return (
     <ScrollView
       horizontal={true}
@@ -12,7 +16,9 @@ const Carousel = props => {
         <Text style={styles.text}>{props.title}</Text>
       </View>
       {props.list.map((el, i) => (
-        <Album element={el} key={i} />
+        <Album element={el} key={i} onPress={() => goToPlayer()}
+
+        />
       ))}
     </ScrollView>
   );

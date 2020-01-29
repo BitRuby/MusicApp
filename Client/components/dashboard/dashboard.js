@@ -1,5 +1,5 @@
-import React from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import { View, ScrollView, BackHandler, Keyboard } from 'react-native';
 import Searchbox from '../searchbox/searchbox';
 import Carousel from '../carousel/carousel';
 import PlayerWidget from '../player-widget/player-widget';
@@ -7,13 +7,23 @@ import styles from './dashboard.style';
 import Search from '../search/search';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
+import { Actions } from 'react-native-router-flux';
 
 const Dashboard = props => {
   const [focused, onFocus] = React.useState(false);
   const [value, onChange] = React.useState('');
-  React.useEffect(() => {
-    props.onInit();
+  useEffect(() => {
+    const {onInit} = props;
+    onInit();
+    BackHandler.addEventListener('hardwareBackPress', backButtonPress);
+    return () => BackHandler.removeEventListener('hardwareBackPress', backButtonPress);
   }, []);
+  const backButtonPress = () => {
+    onFocus(false);
+    Keyboard.dismiss();
+    onChange('');
+  }
+  const {playlist} = props;
   return (
     <View style={{flex: 1, backgroundColor: '#2f3640'}}>
       <View style={styles.view}>
@@ -28,8 +38,8 @@ const Dashboard = props => {
         ) : (
           <View style={{flex: 1}}>
           <ScrollView vertical={true}>
-            <Carousel title="Playlisty" list={props.playlist} />
-            <Carousel title="Ulubione" list={props.playlist} />
+            <Carousel title="Playlisty" list={playlist} />
+            <Carousel title="Ulubione" list={playlist} />
           </ScrollView>
          <PlayerWidget title={'Whatsername'} artist={'Green Day'} />
           </View>

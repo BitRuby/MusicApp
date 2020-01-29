@@ -9,13 +9,14 @@ const Searchbox = props => {
     Keyboard.dismiss();
     props.onChange('');
   };
+  const {onChange, onFocus} = props;
   return (
     <View style={styles.view}>
       {props.focused ? (
         <FontAwesome
           name="arrow-left"
           onPress={() => onBack()}
-          size={24}
+          size={30}
           style={styles.iconBack}
           color="#B8B8B8"
         />
@@ -23,7 +24,7 @@ const Searchbox = props => {
       {props.value.length > 0 ? (
         <FontAwesome
           name="times"
-          onPress={() => props.onChange('')}
+          onPress={() => onChange('')}
           size={24}
           style={styles.icon}
           color="#B8B8B8"
@@ -37,8 +38,8 @@ const Searchbox = props => {
         onSubmitEditing={() => {
           Keyboard.dismiss();
         }}
-        onFocus={() => props.onFocus(true)}
-        onChangeText={text => props.onChange(text)}
+        onFocus={() => onFocus(true)}
+        onChangeText={text => onChange(text)}
         placeholder="Wyszukiwarka utworów"
         placeholderTextColor="#B8B8B8"></TextInput>
     </View>
