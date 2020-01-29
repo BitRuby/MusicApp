@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
 import com.musicapp.serwer.services.FavoriteService;
 import com.musicapp.serwer.services.RecommendationService;
+import com.musicapp.serwer.services.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,10 @@ public class API {
     private FavoriteService favoriteService;
     @Autowired
     private RecommendationService recommendationService;
+    @Autowired
+    private TrackService trackService;
 
+    private Gson gson = new Gson();
 
     @GetMapping(path = "/playlist/{id}")
     public ResponseEntity<String> getPlaylist(@PathVariable long id){
@@ -78,13 +82,7 @@ public class API {
     @GetMapping(path = "/favorites/{n}")
     public ResponseEntity<String> getFavorites(@PathVariable long n) {
         ArrayList<FavoriteRes> response = new ArrayList<>();
-        int i = 0;
-        for (i = 0; i < n; i++) {
-            FavoriteRes returnValue = new FavoriteRes();
 
-            returnValue.setTrackID("number123number"+i);
-            response.add(returnValue);
-        }
         Gson gson = new Gson();
         String json = gson.toJson(response);
         if (response.size() < 1) {
@@ -97,15 +95,8 @@ public class API {
     @GetMapping(path = "/favorites")
     public ResponseEntity<String> getFavorites() {
         ArrayList<FavoriteRes> response = new ArrayList<>();
-        int i = 0;
-        int n= 100;
-        for (i = 0; i < n; i++) {
-            FavoriteRes returnValue = new FavoriteRes();
 
-            returnValue.setTrackID("number123number"+i);
-            response.add(returnValue);
-        }
-        Gson gson = new Gson();
+
         String json = gson.toJson(response);
         if (response.size() < 1) {
             json = "Brak zawartości w ulubione";
@@ -116,18 +107,10 @@ public class API {
 
     @GetMapping(path = "/track/{id}")
     public ResponseEntity<String> getTrack(@PathVariable String id){
-        TrackRes returnValue =  new TrackRes();
-        returnValue.setId(id);
-        returnValue.setTitle("Gender");
-        returnValue.setAlbum(new AlbumRes("12", "O-dur C-ból"));
-        returnValue.setArtist(new ArtistRes( "13", "Łydka Grubasa"));
-        returnValue.setDuration_ms(69420L);
-        returnValue.setHref("https://open.spotify.com/track/5YchihSamhn4REnnfW3ESJ");
-        returnValue.setTrack_number(13L);
-        returnValue.setType("Dzika Viksa");
-        Gson gson = new Gson();
-        String json = gson.toJson(returnValue);
-        if(returnValue.getId().equals("0")){
+        TrackRes response = trackService.searchTrackByID(id);
+        String json = gson.toJson(response);
+        if(response==null || response.getId().equals("0")){
+            json = null;
             json = "Nie znaleziono utworu";
             return ResponseEntity.status(404).body(json);
         }
@@ -191,12 +174,6 @@ public class API {
         ArrayList<FavoriteRes> response = new ArrayList<>();
         int i = 0;
         int n = Integer.parseInt(id);
-        for (i = 0; i < n; i++) {
-            FavoriteRes returnValue = new FavoriteRes();
-
-            returnValue.setTrackID("number123number"+i);
-            response.add(returnValue);
-        }
 
         Gson gson = new Gson();
         String json = gson.toJson(response);
@@ -210,15 +187,7 @@ public class API {
 
     @PostMapping(path = "/test")
     public void test(){
-        favoriteService.addTrack("2","q");
-        favoriteService.addTrack("2","w");
-        favoriteService.addTrack("3","e");
-        favoriteService.addTrack("4","r");
-    }
-
-    @PostMapping(path = "/recommendation")
-    public void recommendation(){
-        recommendationService.getRecommendation();
+        favoriteService.addTrack("4fda3443rfasd","dsadas434");
     }
 
 

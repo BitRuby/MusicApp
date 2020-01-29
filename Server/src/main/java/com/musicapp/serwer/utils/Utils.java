@@ -11,13 +11,12 @@ import java.net.URL;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 public class Utils {
-    private static final String token = "BQCv6P9gjuXOg8cwpQzvy1OGw-XxkBEe9WFpisAuyO6LJ3ifbTCVO8K01W_btgUHB1Er7SdAGJHkJ4XaCoQSerZq5IPAwP0pXh3r5ZVvuhD0xK1a6qok0N0qdDUSinQ9r8xEJeJze8rfDO8D2NQcSy3Rhp_L6c7_7yCC";
+    private static final String token = "BQAmtMH6jNT4vGhCdF9Sq7MEYPybXvIY08g9BjtAPODFi8N7o2siZlVByDc5cPT6s3i5kbyhbogwQ0Y4f2mxf2GgvRQZplK2sx7Y1sVuCjCEWDXv-lmV70cxgsugUxJww52yRz7JO3oa";
 
 
     public StringBuilder getResponseFromSpotify(String search) throws IOException {
-//        search = search.replaceAll(" ", "%2B");
-//        String url = "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=" + 15;
-        System.out.println(token);
+
+        System.out.println("Actual token: " + token);
         URL obj = new URL(search);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
