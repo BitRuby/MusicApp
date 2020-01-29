@@ -2,14 +2,19 @@ package com.musicapp.serwer.controlers;
 
 import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+
 @RestController
 @RequestMapping("api")
 public class API {
+
+    @Value("${token}")
+    private String token;
 
     @GetMapping(path = "/playlist/{id}")
     public ResponseEntity<String> getPlaylist(@PathVariable long id){
@@ -195,5 +200,6 @@ public class API {
         }
         return ResponseEntity.ok(json);
     }
+
 
 }
