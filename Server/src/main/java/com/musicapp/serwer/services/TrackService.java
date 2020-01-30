@@ -144,6 +144,7 @@ public class TrackService {
                 result.setHref(array.getJSONObject(i).getString("preview_url"));
                 result.setTrack_number(array.getJSONObject(i).getLong("track_number"));
                 result.setTitle(array.getJSONObject(i).getString("name"));
+                result.setArtist(new ArtistRes(array.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("id"), array.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("name")));
                 list.add(result);
         }
         }catch (Exception e){
