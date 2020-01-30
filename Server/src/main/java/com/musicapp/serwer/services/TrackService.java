@@ -79,7 +79,7 @@ public class TrackService {
             result.setId(json.getString("id"));
             result.setType(json.getString("type"));
             result.setDuration_ms(json.getLong("duration_ms"));
-            result.setHref(json.getString("href"));
+            result.setHref(json.getString("preview_url"));
             result.setTrack_number(json.getLong("track_number"));
             result.setTitle(json.getString("name"));
             result.setArtist(new ArtistRes(json.getJSONArray("artists").getJSONObject(0).getString("id"), json.getJSONArray("artists").getJSONObject(0).getString("name")));
