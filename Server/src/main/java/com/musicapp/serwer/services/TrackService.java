@@ -20,6 +20,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.util.List;
 
+/**
+ * Serwis wykozystywany do operacji na utworach
+ */
 @Service
 public class TrackService {
 
@@ -28,8 +31,13 @@ public class TrackService {
     Gson dzejson = new Gson();
     String url = "https://api.spotify.com/v1/tracks/";
 
+    /**
+     * Metoda pobiera informacje o danym utworze
+     *
+     * @param id id utworu
+     * @return Zwraca informacje o utowrze.
+     */
     public TrackRes searchTrackByID(String id) {
-        ObjectMapper mapper = new ObjectMapper();
         Utils getReq = new Utils();
         StringBuilder response = null;
         TrackRes result = null;
@@ -59,6 +67,12 @@ public class TrackService {
         return trackRepo.findAll();
     }
 
+    /**
+     * Metoda pobiera informacje z JSONa i zapisuje je w obiekcie TrackRes
+     *
+     * @param json JSON z zdpowiedza od API
+     * @return Zwraca obiekt z danymi utworu
+     */
     private TrackRes JsonToTrackRes(JSONObject json){
         TrackRes result = new TrackRes();
         try{

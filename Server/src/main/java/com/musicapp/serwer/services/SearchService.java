@@ -12,11 +12,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/**
+ * Serwis wykozystywany do szukania utworow, albumow i artystow
+ */
 @Service
 public class SearchService {
 
     String url = "https://api.spotify.com/v1/search?q=";
 
+    /**
+     * Metoda szuka utworow, albumow i artystow o podanej nazwie za pomoca API Spoptify
+     *
+     * @param name ciag znakow ktory bedzie wyszukiwany
+     * @return Zwraca obiekt zawierajacy znalezione utwory, albumy i artystow
+     */
     public SearchRes search(String name) {
         name = name.replaceAll(" ", "%2B");
         String newUrl = url + name + "&type=album%2Cartist%2Ctrack&market=PL&limit=20";
@@ -43,13 +52,24 @@ public class SearchService {
         return result;
     }
 
-
+    /**
+     * Metoda parsuje pobranego JSONa
+     *
+     * @param json JSON z API
+     * @return Zwraca obiekt zawierajacy znalezione utwory, albumy i artystow
+     */
     private SearchRes jsonParser(JSONObject json) {
         SearchRes result = null;
         result = new SearchRes(getArtistFromJson(json),getAlbumsFromJson(json),getTracksFromJson(json));
         return result;
     }
 
+    /**
+     * Metoda pobiera z JSONa liste utworow
+     *
+     * @param json JSON z API
+     * @return Zwraca liste utworow
+     */
     private ArrayList<TrackRes> getTracksFromJson(JSONObject json) {
         ArrayList<TrackRes> trackResArrayList = new ArrayList<>();
         try {
@@ -75,7 +95,12 @@ public class SearchService {
         }
         return trackResArrayList;
     }
-
+    /**
+     * Metoda pobiera z JSONa liste albumow
+     *
+     * @param json JSON z API
+     * @return Zwraca liste albumow
+     */
     private ArrayList<AlbumRes> getAlbumsFromJson(JSONObject json) {
         ArrayList<AlbumRes> albumResArrayList = new ArrayList<>();
         try {
@@ -93,7 +118,12 @@ public class SearchService {
         }
         return albumResArrayList;
     }
-
+    /**
+     * Metoda pobiera z JSONa liste artystow
+     *
+     * @param json JSON z API
+     * @return Zwraca liste aartystow
+     */
     private ArrayList<ArtistRes> getArtistFromJson(JSONObject json) {
         ArrayList<ArtistRes> artistResArrayList = new ArrayList<>();
         try {

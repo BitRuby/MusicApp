@@ -7,12 +7,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Serwis wykozystywany do operacji na ulubionych utworach
+ */
 @Service
 public class FavoriteService {
 
     @Autowired
     private FavoriteRepo favoriteRepo;
 
+    /**
+     * Metoda dodaje utwor do bazy
+     * @param track id utworu
+     */
     public void addTrack(String track) {
         favoriteRepo.save(new FavoriteRes(track));
     }

@@ -10,10 +10,19 @@ import java.net.URL;
 
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
+/**
+ * Klasa zawiera medote odpowiedzialna za kokunikacje z API
+ */
 public class Utils {
-    private static final String token = "BQAo1HJ-tUDWxzAh0B25RglnhNuBROhI5qqJICvWjrqvSlm5Vf3OjoXM_FMzMTImRlUA9Xf0PyqeVocTgRnqmGZm9siWcorgLbbRrdT2zY5A3IqQBNKmoT-e8W0H6eOqTEFCmOBqk-eYVLHEpR9s8QZ8biiqBArkEKXm";
+    private static final String token = "BQA5E7NHOZOcgfjjjDSek_CYV45MgAKcflh138PtxCAey1kHik2FwYJUiQ8RIkqcCs3y-awsAooX29upzNzuagwbk_nJ5sVxxbDBtQYD8RUo48Cd_FMG1YVMUpODhfchJ7TXqgD_UeyAxBbyvcZNvtQIw8T4qXFqgUMG";
 
-
+    /**
+     * Metoda zwraca odpowiedz od API Spotify.
+     *
+     * @param search adres endpointa
+     * @return json.
+     * @throws IOException Zgłaszany w przypadku bledu komunikacji.
+     */
     public StringBuilder getResponseFromSpotify(String search) throws IOException {
 
         System.out.println("Actual token: " + token);

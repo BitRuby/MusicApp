@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+/**
+ * Serwis wykozystywany do proponowania utworow
+ */
 @Service
 public class RecommendationService {
     private String URL = "https://api.spotify.com/v1/recommendations";
@@ -23,6 +27,11 @@ public class RecommendationService {
     @Autowired
     FavoriteService favoriteService;
 
+    /**
+     * Metoda pobiera 5 losowych utworow z listy ulubionych, lub wszystkie utwory jesli jest ich mniej niz 5
+     *
+     * @return Zwraca liste wylosowanych utworow
+     */
     //losuje do 5 ulubionych utworow
     private List<FavoriteRes> getRandomTracks() {
         ArrayList<FavoriteRes> favoriteResArrayList = (ArrayList<FavoriteRes>) favoriteService.getAll();
@@ -44,6 +53,11 @@ public class RecommendationService {
         return randomFav;
     }
 
+    /**
+     * Metoda pobiera utwory z metody getRandomTracks(), a nastepnie na ich podstawie wyznacza rekomendowany utwor
+     *
+     * @return Zwraca losowy proponowany utwor
+     */
     public TrackRes getRecommendation() {
         StringBuilder seed_tracks = new StringBuilder();
         TrackRes result = null;
@@ -75,7 +89,12 @@ public class RecommendationService {
         return result;
     }
 
-
+    /**
+     * Metoda pobiera z JSONa liste proponowanych utworow
+     *
+     * @param json JSON z API
+     * @return Zwraca jeden z wielu proponowanych utworow
+     */
     private TrackRes jsonParser(String json) {
         ArrayList<TrackRes> listOfTrack = new ArrayList<>();
         try {

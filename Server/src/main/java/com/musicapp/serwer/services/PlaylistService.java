@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Serwis wykozystywany do operacji na playlistach
+ */
 @Service
 public class PlaylistService {
     String url = "https://api.spotify.com/v1/playlists/";
@@ -18,10 +21,18 @@ public class PlaylistService {
     @Autowired
     PlaylistRepo playlistRepo;
 
+    /**
+     * Metoda dodaje playliste do bazy
+     * @param id id playlisty
+     */
     public void addPlaylist(String id) {
         playlistRepo.save(new PlaylistRes(id));
     }
 
+    /**
+     * Metoda pobiera wszystkie playlisty z bazy
+     * @return Zwraca liste playlist
+     */
     public List<PlaylistRes> getAll() {
         ArrayList<PlaylistRes> id = (ArrayList<PlaylistRes>) playlistRepo.findAll();
         ArrayList<PlaylistRes> result = new ArrayList<>();
@@ -31,10 +42,18 @@ public class PlaylistService {
         return result;
     }
 
+    /**
+     * Metoda usuwa wszystkie playlisty z bazy
+     */
     public void dropAll() {
         playlistRepo.deleteAll();
     }
 
+    /**
+     * Metoda pobiera N playlistlist
+     * @param n liczba list do pobrania
+     * @return Zwraca N playlist
+     */
     public List<PlaylistRes> getNPlaylist(int n) {
         if (playlistRepo.findAll().size() < n)
             return getAll();
@@ -48,6 +67,11 @@ public class PlaylistService {
         }
     }
 
+    /**
+     * Metoda pobiera informacje o playliscie z API Spotify
+     * @param id id playlisty
+     * @return Zwraca informacje o danej playliscie
+     */
     public PlaylistRes searchPlaylistByID(String id) {
         String newUrl = url + id;
         Utils getReq = new Utils();
@@ -73,6 +97,12 @@ public class PlaylistService {
         return result;
     }
 
+    /**
+     * Metoda pobiera z JSONa informacje o playliscie
+     *
+     * @param json JSON z API
+     * @return Zwraca obiekt playlisty
+     */
     private PlaylistRes jsonToPlaylistRes(JSONObject json) {
         PlaylistRes result = new PlaylistRes();
         ArrayList<TrackRes> trackResArrayList = new ArrayList<>();
