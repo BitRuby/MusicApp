@@ -24,18 +24,35 @@ public class FavoriteService {
         favoriteRepo.save(new FavoriteRes(track));
     }
 
+    /**
+     * Metoda pobiera wszystkie ulubione utwory z bazy
+     * @return  Lista ulubionych utworow
+     */
     public List<FavoriteRes> getAll() {
         return favoriteRepo.findAll();
     }
 
+    /**
+     * Metoda usuwa wszystkie ulubione utwory z bazy
+     */
     public void dropAll() {
         favoriteRepo.deleteAll();
     }
 
+    /**
+     * Metoda pobiera jeden utwor o podanym id
+     * @param id id utworu
+     * @return  ulubiony utwor
+     */
     public FavoriteRes findOne(String id){
         return favoriteRepo.findOneByTrackID(id);
     }
 
+    /**
+     * Metoda pobiera n ulubionych utworów
+     * @param n id utworu
+     * @return  Zwraca n ulubionych
+     */
     public List<FavoriteRes> getNtracks(int n) {
         if (favoriteRepo.findAll().size() < n)
             return favoriteRepo.findAll();

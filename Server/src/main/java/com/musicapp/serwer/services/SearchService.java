@@ -60,7 +60,8 @@ public class SearchService {
      */
     private SearchRes jsonParser(JSONObject json) {
         SearchRes result = null;
-        result = new SearchRes(getArtistFromJson(json),getAlbumsFromJson(json),getTracksFromJson(json));
+//        result = new SearchRes(getArtistFromJson(json),getAlbumsFromJson(json),getTracksFromJson(json));
+        result = new SearchRes(getTracksFromJson(json));
         return result;
     }
 

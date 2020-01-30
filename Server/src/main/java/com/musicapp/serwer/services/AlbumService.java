@@ -6,12 +6,20 @@ import com.musicapp.serwer.utils.Utils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+/**
+ * Serwis wykozystywany do operacji na albumach
+ */
 @Service
 public class AlbumService {
 
+    String url = "https://api.spotify.com/v1/albums/";
 
-    String url = "\thttps://api.spotify.com/v1/albums/";
-
+    /**
+     * Metoda pobiera informacje o danym albumie
+     *
+     * @param id id albumu
+     * @return Zwraca informacje o artyscie.
+     */
     public AlbumRes searchAlbumByID(String id) {
         Utils getReq = new Utils();
         StringBuilder response = null;
@@ -37,6 +45,12 @@ public class AlbumService {
     }
 
 
+    /**
+     * Metoda pobiera informacje z JSONa i zapisuje je w obiekcie AlbumRes
+     *
+     * @param json JSON z odpowiedza od API
+     * @return Zwraca obiekt z danymi albumu
+     */
     private AlbumRes JsonToArtistRes(JSONObject json){
         AlbumRes result = new AlbumRes();
         try{

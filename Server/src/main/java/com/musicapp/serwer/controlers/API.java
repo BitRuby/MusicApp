@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 
+/**
+ * Kontroler zawierający metody realizujące obsługę zadan klienta
+ */
 @RestController
 @RequestMapping("api")
 @CrossOrigin("*")
@@ -33,6 +36,11 @@ public class API {
 
     private Gson gson = new Gson();
 
+    /**
+     * Endpoint służący do pobierania playlisty o podanym id
+     * @param id id playlisty
+     * @return Zwraca palyliste.
+     */
     @GetMapping(path = "/playlist/{id}")
     public ResponseEntity<String> getPlaylist(@PathVariable String id) {
         PlaylistRes returnValue = playlistService.searchPlaylistByID(id);
@@ -45,6 +53,11 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    /**
+     * Endpoint służący do pobierania kilku playlist
+     * @param n id playlisty
+     * @return Zwraca n playlist.
+     */
     @GetMapping(path = "/playlists/{n}")
     public ResponseEntity<String> getPlaylists(@PathVariable int n) {
         ArrayList<PlaylistRes> response = (ArrayList<PlaylistRes>) playlistService.getNPlaylist(n);
@@ -58,6 +71,10 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    /**
+     * Endpoint służący do pobierania wszystkich playlist
+     * @return Zwraca wszystkie playlist.
+     */
     @GetMapping(path = "/playlists")
     public ResponseEntity<String> getPlaylists() {
         ArrayList<PlaylistRes> response = (ArrayList<PlaylistRes>) playlistService.getAll();
@@ -71,6 +88,11 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    /**
+     * Endpoint służący do pobierania n ulubionych utworow
+     * @param n ilosc utworow
+     * @return Zwraca n ulubionych utworow.
+     */
     @GetMapping(path = "/favorites/{n}")
     public ResponseEntity<String> getFavorites(@PathVariable int n) {
         ArrayList<FavoriteRes> response = new ArrayList<> (favoriteService.getNtracks(n));
@@ -84,6 +106,10 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    /**
+     * Endpoint służący do pobierania wszystkich ulubionych utworow
+     * @return Zwraca wszystkie ulubionych utworow.
+     */
     @GetMapping(path = "/favorites")
     public ResponseEntity<String> getFavorites() {
         ArrayList<FavoriteRes> response = (ArrayList<FavoriteRes>) favoriteService.getAll();
@@ -96,6 +122,11 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    /**
+     * Endpoint służący do pobierania konkretnego utworu
+     * @param id id utworu
+     * @return Zwraca ulubiony utwor
+     */
     @PostMapping(path = "/favorites")
     public ResponseEntity<String> postFavotires(@RequestParam(required = true) String id){
         FavoriteRes response = favoriteService.findOne(id);
@@ -108,7 +139,11 @@ public class API {
         }
         return ResponseEntity.ok(json);
     }
-
+    /**
+     * Endpoint służący do pobierania informacji o utworze
+     * @param id id utworu
+     * @return Zwraca dane utworu
+     */
     @GetMapping(path = "/track/{id}")
     public ResponseEntity<String> getTrack(@PathVariable String id){
         TrackRes response = trackService.searchTrackByID(id);
@@ -121,7 +156,11 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
-
+    /**
+     * Endpoint służący do pobierania informacji o artyscie
+     * @param id id artysty
+     * @return Zwraca dane artysty
+     */
     @GetMapping(path = "/artist/{id}")
     public ResponseEntity<String> getArtist(@PathVariable String id){
         ArtistRes returnValue = artistService.searchArtistByID(id);
@@ -135,7 +174,10 @@ public class API {
     }
 
 
-
+    /**
+     * Endpoint służący do pobrania rekomendowanego utworu
+     * @return Zwraca rekomendowany utwor
+     */
     @GetMapping(path = "/recommendations")
     public ResponseEntity<String> getRecommendation() {
         TrackRes response = recommendationService.getRecommendation();
@@ -147,6 +189,11 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    /**
+     * Endpoint służący do pobierania informacji o albumie
+     * @param id id artysty
+     * @return Zwraca dane artysty
+     */
     @GetMapping(path = "/album/{id}")
     public ResponseEntity<String> getAlbum(@PathVariable String id){
         AlbumRes returnValue = albumService.searchAlbumByID(id);

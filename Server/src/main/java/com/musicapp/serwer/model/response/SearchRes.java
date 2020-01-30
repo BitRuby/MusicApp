@@ -13,6 +13,10 @@ public class SearchRes {
         this.trackList = trackList;
     }
 
+    public SearchRes(ArrayList<TrackRes> trackList) {
+        this.trackList = trackList;
+    }
+
     public ArrayList<ArtistRes> getArtistList() {
         return artistList;
     }
