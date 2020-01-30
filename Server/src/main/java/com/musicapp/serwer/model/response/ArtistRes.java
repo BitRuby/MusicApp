@@ -1,7 +1,12 @@
 package com.musicapp.serwer.model.response;
 
+/**
+ * Klasa modelu Artysty
+ */
 public class ArtistRes {
+    /** id artysty. */
     private String id;
+    /** nazwa albumu. */
     private String name;
 
     public ArtistRes() {

@@ -1,13 +1,24 @@
 package com.musicapp.serwer.model.response;
 
+/**
+ * Klasa modelu utworu
+ */
 public class TrackRes {
+    /** tytul utworu. */
     private String title;
+    /** nazwa walbumu. */
     private AlbumRes album;
+    /** nazwa artysty. */
     private ArtistRes artist;
+    /** id utworu. */
     private String id;
+    /** dlugosc utworu. */
     private Long duration_ms;
+    /** link do utworu. */
     private String href;
+    /** numer utworu na plycie. */
     private long track_number;
+    /** typ. */
     private String type;
 
     public TrackRes() {

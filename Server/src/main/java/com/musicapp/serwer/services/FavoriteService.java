@@ -18,10 +18,12 @@ public class FavoriteService {
 
     /**
      * Metoda dodaje utwor do bazy
-     * @param track id utworu
+     * @param id id utworu
+     * @param name nazwa utworu
+     * @param img adres obrazka
      */
-    public void addTrack(String track) {
-        favoriteRepo.save(new FavoriteRes(track));
+    public void addTrack(String id,String name, String img) {
+        favoriteRepo.save(new FavoriteRes(id,name,img));
     }
 
     /**

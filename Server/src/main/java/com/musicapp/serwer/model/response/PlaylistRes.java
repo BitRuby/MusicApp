@@ -4,11 +4,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 
+/**
+ * Klasa modelu playlist
+ */
 @Document
 public class PlaylistRes {
+    /** id klucza. */
     private String id;
+    /** nazwa playlisty. */
     private String name;
+    /** utwory playlisty. */
     private ArrayList<TrackRes> content;
+    /** link do obrazu playlisty. */
     private String imgCover;
 
     public PlaylistRes() {

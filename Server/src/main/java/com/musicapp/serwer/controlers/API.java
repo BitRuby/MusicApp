@@ -206,6 +206,11 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    /**
+     * Endpoint służący do pobierania utworow na podstawie nazwy z API
+     * @param name nazwa szukanego utworu
+     * @return Zwraca utwory o podanej nazwie
+     */
     @GetMapping(path = "/search/{name}")
     public ResponseEntity<String> getSearch(@PathVariable String name){
         SearchRes response = searchService.search(name);
@@ -219,27 +224,49 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
-    @GetMapping(path = "/addTracks")
-    public void addSomeTracks(){
-        favoriteService.addTrack("63yesoRJgXT5QALryYFV0X");
-        favoriteService.addTrack("2uZVfvOK7MTjBTRICYmpso");
-        favoriteService.addTrack("3lPr8ghNDBLc2uZovNyLs9");
-        favoriteService.addTrack("5JHNg1hxZFT7TDEphhM4wj");
-        favoriteService.addTrack("0bRQiJTHxIXb45d8uwTMlG");
-        favoriteService.addTrack("4xrzG4pw9JN8BJqqjurcPs");
+    /**
+     * Endpoint służący dodaniw utworu do ulubionych
+     * @param id id utworu
+     */
+
+    @PostMapping(path = "/addTrack")
+    public void addOneTrack(@RequestParam(required = true) String id, @RequestParam(required = true) String name, @RequestParam(required = true) String img){
+        favoriteService.addTrack(id,name,img);
     }
 
+    /**
+     * Endpoint służący do dodania przykladowych utworow do bazy
+     */
+    @GetMapping(path = "/addTracks")
+    public void addSomeTracks(){
+        favoriteService.addTrack("63yesoRJgXT5QALryYFV0X","Boy","https://i.scdn.co/image/ab67616d0000b27399a3a1c380019cdc2ba9b8c2");
+        favoriteService.addTrack("2uZVfvOK7MTjBTRICYmpso","Birds (feat. Elisa)","https://i.scdn.co/image/f28b50cc1583b2627331e12d7ca3d1e4cb128875");
+        favoriteService.addTrack("3lPr8ghNDBLc2uZovNyLs9","Supermassive Black Hole","https://i.scdn.co/image/ab67616d0000b27328933b808bfb4cbbd0385400");
+        favoriteService.addTrack("5JHNg1hxZFT7TDEphhM4wj","Waiting for the End","https://i.scdn.co/image/ab67616d0000b27359211e56a493ac4509457bab");
+        favoriteService.addTrack("0bRQiJTHxIXb45d8uwTMlG","Never Go Away","https://i.scdn.co/image/33cfad468a9f3012df179d4d5f31e3af37411e5b");
+        favoriteService.addTrack("4xrzG4pw9JN8BJqqjurcPs","Gold","https://i.scdn.co/image/43dbaac0e5a97829636db85d838271e214e762ff");
+    }
+
+    /**
+     * Endpoint służący do usuniecia wszystkich utworow z bazy
+     */
     @GetMapping(path = "/dropAllTracks")
     public void deleteAllTracks(){
         favoriteService.dropAll();
     }
 
+    /**
+     * Endpoint służący do dodania przykładowych playlist do bazy
+     */
     @GetMapping(path = "/addPlaylists")
     public void addSomePlaylists(){
         playlistService.addPlaylist("3fPG8zDPmtahUJkmdq3OSX");
         playlistService.addPlaylist("37i9dQZF1DX6GJVEkXUD2r");
     }
 
+    /**
+     * Endpoint służący do usuniecia wszystkich playlist z bazy
+     */
     @GetMapping(path = "/dropAllPlaylists")
     public void deleteAllPlaylists(){
         playlistService.dropAll();

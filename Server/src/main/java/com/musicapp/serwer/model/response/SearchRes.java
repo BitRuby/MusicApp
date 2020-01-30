@@ -2,9 +2,15 @@ package com.musicapp.serwer.model.response;
 
 import java.util.ArrayList;
 
+/**
+ * Klasa modelu wyszukiwania
+ */
 public class SearchRes {
+    /** lista artyswo. */
     private ArrayList<ArtistRes> artistList;
+    /** lista albumow. */
     private ArrayList<AlbumRes> albumList;
+    /** lista utworow. */
     private ArrayList<TrackRes> trackList;
 
     public SearchRes(ArrayList<ArtistRes> artistList, ArrayList<AlbumRes> albumList, ArrayList<TrackRes> trackList) {

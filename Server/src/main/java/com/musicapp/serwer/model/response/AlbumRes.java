@@ -1,8 +1,14 @@
 package com.musicapp.serwer.model.response;
 
+/**
+ * Klasa modelu Albumu
+ */
 public class AlbumRes {
+    /** id albumu. */
     private String id;
+    /** nazwa albumu. */
     private String name;
+    /** obraz albumu. */
     private String img;
 
     public AlbumRes() {
