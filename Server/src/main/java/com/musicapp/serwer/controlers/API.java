@@ -227,8 +227,9 @@ public class API {
     /**
      * Endpoint służący dodaniw utworu do ulubionych
      * @param id id utworu
+     * @param name nazwa utworu
+     * @param img img albumu
      */
-
     @PostMapping(path = "/addTrack")
     public void addOneTrack(@RequestParam(required = true) String id, @RequestParam(required = true) String name, @RequestParam(required = true) String img){
         favoriteService.addTrack(id,name,img);
