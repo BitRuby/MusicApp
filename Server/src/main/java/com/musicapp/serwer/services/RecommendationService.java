@@ -61,7 +61,6 @@ public class RecommendationService {
 
             //zapytanie do API
             String newURL = URL + "?seed_tracks=" + seed_tracks + "&min_energy=0.4&min_popularity=50";
-//            URL = "https://api.spotify.com/v1/recommendations?seed_tracks=0c6xIDDpzE81m2q797ordA,11dFghVXANMlKmJXsNCbNl&min_energy=0.4&min_popularity=50";
             System.out.println(newURL);
             Utils utils = new Utils();
             StringBuilder json = null;

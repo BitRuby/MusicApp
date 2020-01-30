@@ -1,12 +1,22 @@
 package com.musicapp.serwer.model.response;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 
+@Document
 public class PlaylistRes {
     private String id;
     private String name;
     private ArrayList<TrackRes> content;
     private String imgCover;
+
+    public PlaylistRes() {
+    }
+
+    public PlaylistRes(String id) {
+        this.id = id;
+    }
 
     public String getImgCover() {
         return imgCover;

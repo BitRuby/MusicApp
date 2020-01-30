@@ -11,7 +11,7 @@ import java.net.URL;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 public class Utils {
-    private static final String token = "BQDZP7KwyyRuNQYHW_uwBEs0tU0oF6bxxqpOBB6-rwdyYw6siL5jOMW85s7z42y3gGGAiZruwJ3-WkbAXsWNQsbCIJ6tIlHKfhulipE7W6riPaq8n8-yFxXrnighFAnIt7YwqqL1aWvKL_X_VfpqwHkh3FOIKjc2P7OX";
+    private static final String token = "BQAqueNwhX2d7MPtmgQfy0WrVsnaU6D2xbE4hlEszb8ESX_d66oQ_ojfYAtPM3DD4PPnYAdQ1rlwF3ktOhxuouKv4Y4PnZu6eavu-XEeUnG1IytmNCTodY1p87_janKgUvkQ-L4lvxRurI_MMYLcgLFNIC-g4kT-3i";
 
 
     public StringBuilder getResponseFromSpotify(String search) throws IOException {

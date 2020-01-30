@@ -23,7 +23,7 @@ public class API {
     @Autowired
     private RecommendationService recommendationService;
     @Autowired
-    private PlaylistService playlistRes;
+    private PlaylistService playlistService;
 
     @Autowired
     private TrackService trackService;
@@ -32,26 +32,20 @@ public class API {
 
     @GetMapping(path = "/playlist/{id}")
     public ResponseEntity<String> getPlaylist(@PathVariable String id) {
-        PlaylistRes returnValue = playlistRes.searchPlaylistByID(id);
+        PlaylistRes returnValue = playlistService.searchPlaylistByID(id);
         Gson gson = new Gson();
         String json = gson.toJson(returnValue);
         if (returnValue == null) {
-            json = null;
-            json = "Nie znaleziono utworu";
+            json = "Nie znaleziono playlisty";
             return ResponseEntity.status(404).body(json);
         }
         return ResponseEntity.ok(json);
     }
 
     @GetMapping(path = "/playlists/{n}")
-    public ResponseEntity<String> getPlaylists(@PathVariable String n) {
-        ArrayList<PlaylistRes> response = new ArrayList<>();
-        int i = 0;
-//        for (i = 0; i < n; i++) {
-//            PlaylistRes returnValue = new PlaylistRes();
-//            returnValue.setImgCover("img"+i);
-//            response.add(returnValue);
-//        }
+    public ResponseEntity<String> getPlaylists(@PathVariable int n) {
+        ArrayList<PlaylistRes> response = (ArrayList<PlaylistRes>) playlistService.getNPlaylist(n);
+
         Gson gson = new Gson();
         String json = gson.toJson(response);
         if (response.size() < 1) {
@@ -60,17 +54,11 @@ public class API {
         }
         return ResponseEntity.ok(json);
     }
+
     @GetMapping(path = "/playlists")
     public ResponseEntity<String> getPlaylists() {
-        ArrayList<PlaylistRes> response = new ArrayList<>();
-        int i = 0;
-        int nr = 100;
-        for (i = 0; i < nr; i++) {
-            PlaylistRes returnValue = new PlaylistRes();
+        ArrayList<PlaylistRes> response = (ArrayList<PlaylistRes>) playlistService.getAll();
 
-            returnValue.setImgCover("img"+i);
-            response.add(returnValue);
-        }
         Gson gson = new Gson();
         String json = gson.toJson(response);
         if (response.size() < 1) {
@@ -81,8 +69,8 @@ public class API {
     }
 
     @GetMapping(path = "/favorites/{n}")
-    public ResponseEntity<String> getFavorites(@PathVariable long n) {
-        ArrayList<FavoriteRes> response = new ArrayList<>();
+    public ResponseEntity<String> getFavorites(@PathVariable int n) {
+        ArrayList<FavoriteRes> response = new ArrayList<> (favoriteService.getNtracks(n));
 
         Gson gson = new Gson();
         String json = gson.toJson(response);
@@ -95,8 +83,7 @@ public class API {
 
     @GetMapping(path = "/favorites")
     public ResponseEntity<String> getFavorites() {
-        ArrayList<FavoriteRes> response = new ArrayList<>();
-
+        ArrayList<FavoriteRes> response = (ArrayList<FavoriteRes>) favoriteService.getAll();
 
         String json = gson.toJson(response);
         if (response.size() < 1) {
@@ -205,10 +192,25 @@ public class API {
         favoriteService.addTrack("0bRQiJTHxIXb45d8uwTMlG");
         favoriteService.addTrack("4xrzG4pw9JN8BJqqjurcPs");
     }
+
     @GetMapping(path = "/dropAllTracks")
     public void deleteAllTracks(){
         favoriteService.dropAll();
     }
+
+    @GetMapping(path = "/addPlaylists")
+    public void addSomePlaylists(){
+        playlistService.addPlaylist("3fPG8zDPmtahUJkmdq3OSX");
+        playlistService.addPlaylist("37i9dQZF1DX6GJVEkXUD2r");
+    }
+
+    @GetMapping(path = "/dropAllPlaylists")
+    public void deleteAllPlaylists(){
+        playlistService.dropAll();
+    }
+
+
+
 
 
 }

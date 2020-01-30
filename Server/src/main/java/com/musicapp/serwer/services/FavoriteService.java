@@ -13,15 +13,22 @@ public class FavoriteService {
     @Autowired
     private FavoriteRepo favoriteRepo;
 
-    public void addTrack(String track){
+    public void addTrack(String track) {
         favoriteRepo.save(new FavoriteRes(track));
     }
 
-    public List<FavoriteRes> getAll(){
+    public List<FavoriteRes> getAll() {
         return favoriteRepo.findAll();
     }
 
-    public void dropAll(){
+    public void dropAll() {
         favoriteRepo.deleteAll();
+    }
+
+    public List<FavoriteRes> getNtracks(int n) {
+        if (favoriteRepo.findAll().size() < n)
+            return favoriteRepo.findAll();
+        else
+            return favoriteRepo.findAll().subList(0, n);
     }
 }
