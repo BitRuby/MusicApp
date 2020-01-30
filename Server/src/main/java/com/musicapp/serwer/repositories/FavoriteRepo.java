@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FavoriteRepo extends MongoRepository<FavoriteRes,String> {
+    FavoriteRes findOneByTrackID(String trackID);
 }

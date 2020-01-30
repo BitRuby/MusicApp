@@ -1,21 +1,19 @@
 package com.musicapp.serwer.services;
 
-import com.musicapp.serwer.model.response.AlbumRes;
 import com.musicapp.serwer.model.response.ArtistRes;
 import com.musicapp.serwer.utils.Utils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AlbumService {
+public class ArtistService {
 
+    String url = "https://api.spotify.com/v1/artists/";
 
-    String url = "\thttps://api.spotify.com/v1/albums/";
-
-    public AlbumRes searchAlbumByID(String id) {
+    public ArtistRes searchArtistByID(String id) {
         Utils getReq = new Utils();
         StringBuilder response = null;
-        AlbumRes result = null;
+        ArtistRes result = null;
         JSONObject jsonObject = null;
         try {
             response = getReq.getResponseFromSpotify(url + id);
@@ -37,17 +35,16 @@ public class AlbumService {
     }
 
 
-    private AlbumRes JsonToArtistRes(JSONObject json){
-        AlbumRes result = new AlbumRes();
+    private ArtistRes JsonToArtistRes(JSONObject json){
+        ArtistRes result = new ArtistRes();
         try{
             result.setId(json.getString("id"));
-            result.setName(json.getString("name"));
-            result.setImg(json.getJSONArray("images").getJSONObject(0).getString("url"));
-
+            result.setId(json.getString("name"));
         }catch (Exception e){
             System.out.println("Dżejson się źle przepisał :/");
             System.out.println(e);
         }
         return result;
     }
+
 }

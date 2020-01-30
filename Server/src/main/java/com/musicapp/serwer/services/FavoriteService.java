@@ -25,6 +25,10 @@ public class FavoriteService {
         favoriteRepo.deleteAll();
     }
 
+    public FavoriteRes findOne(String id){
+        return favoriteRepo.findOneByTrackID(id);
+    }
+
     public List<FavoriteRes> getNtracks(int n) {
         if (favoriteRepo.findAll().size() < n)
             return favoriteRepo.findAll();

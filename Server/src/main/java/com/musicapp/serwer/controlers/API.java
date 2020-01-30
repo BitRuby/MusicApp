@@ -2,10 +2,7 @@ package com.musicapp.serwer.controlers;
 
 import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
-import com.musicapp.serwer.services.FavoriteService;
-import com.musicapp.serwer.services.PlaylistService;
-import com.musicapp.serwer.services.RecommendationService;
-import com.musicapp.serwer.services.TrackService;
+import com.musicapp.serwer.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +12,7 @@ import java.util.ArrayList;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("api")
 public class API {
 
@@ -24,9 +22,12 @@ public class API {
     private RecommendationService recommendationService;
     @Autowired
     private PlaylistService playlistService;
-
     @Autowired
     private TrackService trackService;
+    @Autowired
+    ArtistService artistService;
+    @Autowired
+    AlbumService albumService;
 
     private Gson gson = new Gson();
 
@@ -93,6 +94,19 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
+    @PostMapping(path = "/favorites")
+    public ResponseEntity<String> postFavotires(@RequestParam(required = true) String id){
+        FavoriteRes response = favoriteService.findOne(id);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(response);
+        if (response == null) {
+            json = "Nie znaleziono utworu";
+            return ResponseEntity.status(404).body(json);
+        }
+        return ResponseEntity.ok(json);
+    }
+
     @GetMapping(path = "/track/{id}")
     public ResponseEntity<String> getTrack(@PathVariable String id){
         TrackRes response = trackService.searchTrackByID(id);
@@ -105,24 +119,38 @@ public class API {
         return ResponseEntity.ok(json);
     }
 
-    @GetMapping(path = "/album/{id}")
-    public ResponseEntity<String> getAlbum(@PathVariable String id){
-        AlbumRes returnValue = new AlbumRes(id, "O-dur C-ból","xxx");
+
+    @GetMapping(path = "/artist/{id}")
+    public ResponseEntity<String> getArtist(@PathVariable String id){
+        ArtistRes returnValue = artistService.searchArtistByID(id);
         Gson gson = new Gson();
         String json = gson.toJson(returnValue);
-        if(returnValue.getId().equals("0")){
+        if(returnValue == null){
             json = "Nie znaleziono albumu";
             return ResponseEntity.status(404).body(json);
         }
         return ResponseEntity.ok(json);
     }
 
-    @GetMapping(path = "/artist/{id}")
-    public ResponseEntity<String> getArtist(@PathVariable String id){
-        ArtistRes returnValue = new ArtistRes( id, "Łydka Grubasa");
+
+
+    @GetMapping(path = "/recommendations")
+    public ResponseEntity<String> getRecommendation() {
+        TrackRes response = recommendationService.getRecommendation();
+        String json = gson.toJson(response);
+        if (response == null) {
+            json = "Brak proponowanych utworow";
+            return ResponseEntity.status(404).body(json);
+        }
+        return ResponseEntity.ok(json);
+    }
+
+    @GetMapping(path = "/album/{id}")
+    public ResponseEntity<String> getAlbum(@PathVariable String id){
+        AlbumRes returnValue = albumService.searchAlbumByID(id);
         Gson gson = new Gson();
         String json = gson.toJson(returnValue);
-        if(returnValue.getId().equals("0")){
+        if(returnValue == null){
             json = "Nie znaleziono albumu";
             return ResponseEntity.status(404).body(json);
         }
@@ -152,32 +180,6 @@ public class API {
         String json = gson.toJson(response);
         if(tr.getId().equals("0")){
             json = "Nie znaleziono";
-            return ResponseEntity.status(404).body(json);
-        }
-        return ResponseEntity.ok(json);
-    }
-
-    @PostMapping(path = "/favorites")
-    public ResponseEntity<String> postFavotires(@RequestParam(name = "id") String id){
-        ArrayList<FavoriteRes> response = new ArrayList<>();
-        int i = 0;
-        int n = Integer.parseInt(id);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(response);
-        if (response.size() < 1) {
-            json = "Nie znaleziono utworu";
-            return ResponseEntity.status(404).body(json);
-        }
-        return ResponseEntity.ok(json);
-    }
-
-    @GetMapping(path = "/recommendations")
-    public ResponseEntity<String> getRecommendation() {
-        TrackRes response = recommendationService.getRecommendation();
-        String json = gson.toJson(response);
-        if (response == null) {
-            json = "Brak proponowanych utworow";
             return ResponseEntity.status(404).body(json);
         }
         return ResponseEntity.ok(json);
