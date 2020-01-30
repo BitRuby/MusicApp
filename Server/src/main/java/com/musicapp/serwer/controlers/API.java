@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -149,6 +150,24 @@ public class API {
         TrackRes response = trackService.searchTrackByID(id);
         String json = gson.toJson(response);
         if(response==null || response.getId().equals("0")){
+            json = null;
+            json = "Nie znaleziono utworu";
+            return ResponseEntity.status(404).body(json);
+        }
+        return ResponseEntity.ok(json);
+    }
+
+    /**
+     * Endpoint służący do pobierania listy utrorow na podstawie id albumu
+     * @param id id albumu
+     * @return Zwraca liste utorow
+     */
+    @GetMapping(path = "/trackByAlbum/{id}")
+    public ResponseEntity<String> getTrackByAlbum(@PathVariable String id){
+        List<TrackRes> response = trackService.searchTrackByAlbumID(id);
+        String json = gson.toJson(response);
+
+        if(response==null){
             json = null;
             json = "Nie znaleziono utworu";
             return ResponseEntity.status(404).body(json);

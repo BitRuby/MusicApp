@@ -10,6 +10,7 @@ import com.musicapp.serwer.model.response.TrackRes;
 import com.musicapp.serwer.repositories.TrackRepo;
 import com.musicapp.serwer.utils.Utils;
 import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,5 +92,65 @@ public class TrackService {
             System.out.println(e);
         }
         return result;
+    }
+
+
+    /**
+     * Metoda pobiera liste utworow na bazie id albumu
+     *
+     * @param id id albumu
+     * @return Zwraca liste utworow
+     */
+    public List<TrackRes> searchTrackByAlbumID(String id) {
+        String newUrl = "https://api.spotify.com/v1/albums/" +id+"/tracks";
+        Utils getReq = new Utils();
+        StringBuilder response = null;
+        ArrayList<TrackRes> result = null;
+        JSONObject jsonObject = null;
+        try {
+            response = getReq.getResponseFromSpotify(newUrl);
+        } catch (Exception e) {
+            return null;
+        }
+        try {
+            String json = response.toString();
+            jsonObject = new JSONObject(json);
+
+        }catch (Exception e){
+            System.out.println("Dzejson nie żyje !!! :(");
+        }
+        result = jsonToTrackList(jsonObject);
+        System.out.println(result);
+//        result = dzejson.fromJson(json, TrackRes.class);
+        System.out.println(response);
+        return result;
+    }
+
+    /**
+     * Metoda pobiera informacje z JSONa i zapisuje je w obiekcie TrackRes
+     *
+     * @param json JSON z zdpowiedza od API
+     * @return Zwraca obiekt z danymi utworu
+     */
+    private ArrayList<TrackRes> jsonToTrackList(JSONObject json){
+        ArrayList<TrackRes> list = new ArrayList<>();
+        try{
+            JSONArray array = json.getJSONArray("items");
+        for(int i = 0; i < array.length(); i++){
+            TrackRes result = new TrackRes();
+                result.setId(array.getJSONObject(i).getString("id"));
+                result.setType(array.getJSONObject(i).getString("type"));
+                result.setDuration_ms(array.getJSONObject(i).getLong("duration_ms"));
+                result.setHref(array.getJSONObject(i).getString("preview_url"));
+                result.setTrack_number(array.getJSONObject(i).getLong("track_number"));
+                result.setTitle(array.getJSONObject(i).getString("name"));
+                list.add(result);
+        }
+        }catch (Exception e){
+            System.out.println("Dżejson się źle przepisał :/");
+            System.out.println(e);
+        }
+
+        return list;
     }
 }
