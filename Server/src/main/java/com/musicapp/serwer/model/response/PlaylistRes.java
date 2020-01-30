@@ -3,7 +3,7 @@ package com.musicapp.serwer.model.response;
 import java.util.ArrayList;
 
 public class PlaylistRes {
-    private long id;
+    private String id;
     private String name;
     private ArrayList<TrackRes> content;
     private String imgCover;
@@ -16,11 +16,11 @@ public class PlaylistRes {
         this.imgCover = imgCover;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

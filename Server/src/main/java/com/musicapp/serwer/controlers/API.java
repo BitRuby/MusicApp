@@ -3,6 +3,7 @@ package com.musicapp.serwer.controlers;
 import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
 import com.musicapp.serwer.services.FavoriteService;
+import com.musicapp.serwer.services.PlaylistService;
 import com.musicapp.serwer.services.RecommendationService;
 import com.musicapp.serwer.services.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,35 +23,35 @@ public class API {
     @Autowired
     private RecommendationService recommendationService;
     @Autowired
+    private PlaylistService playlistRes;
+
+    @Autowired
     private TrackService trackService;
 
     private Gson gson = new Gson();
 
     @GetMapping(path = "/playlist/{id}")
-    public ResponseEntity<String> getPlaylist(@PathVariable long id){
-        PlaylistRes returnValue =  new PlaylistRes();
-        returnValue.setId(id);
-        returnValue.setName("number123");
-        returnValue.setImgCover("img"+id);
+    public ResponseEntity<String> getPlaylist(@PathVariable String id) {
+        PlaylistRes returnValue = playlistRes.searchPlaylistByID(id);
         Gson gson = new Gson();
         String json = gson.toJson(returnValue);
-        if(returnValue.getId() == 0){
-            json = "Brak playlisty o podanym identyfikatorze";
+        if (returnValue == null) {
+            json = null;
+            json = "Nie znaleziono utworu";
             return ResponseEntity.status(404).body(json);
         }
         return ResponseEntity.ok(json);
     }
 
     @GetMapping(path = "/playlists/{n}")
-    public ResponseEntity<String> getPlaylists(@PathVariable long n) {
+    public ResponseEntity<String> getPlaylists(@PathVariable String n) {
         ArrayList<PlaylistRes> response = new ArrayList<>();
         int i = 0;
-        for (i = 0; i < n; i++) {
-            PlaylistRes returnValue = new PlaylistRes();
-            returnValue.setId(i + 1);
-            returnValue.setImgCover("img"+i);
-            response.add(returnValue);
-        }
+//        for (i = 0; i < n; i++) {
+//            PlaylistRes returnValue = new PlaylistRes();
+//            returnValue.setImgCover("img"+i);
+//            response.add(returnValue);
+//        }
         Gson gson = new Gson();
         String json = gson.toJson(response);
         if (response.size() < 1) {
@@ -66,7 +67,7 @@ public class API {
         int nr = 100;
         for (i = 0; i < nr; i++) {
             PlaylistRes returnValue = new PlaylistRes();
-            returnValue.setId(i + 1);
+
             returnValue.setImgCover("img"+i);
             response.add(returnValue);
         }
