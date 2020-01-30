@@ -5,14 +5,23 @@ import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { FontAwesome } from '@expo/vector-icons';
 import { Actions } from 'react-native-router-flux';
+import PropTypes from "prop-types";
 
 const Player = props => {
   const width = Dimensions.get('window').width;
   const ref = React.createRef();
   const [play, setPlay] = React.useState(0);
+  const {tracklist, id, onInit} = props;
+  const millisToMinutesAndSeconds = (millis) => {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
+  onInit(id?.trackID);
   React.useEffect(() => {
-    props.onInit();
-  }, []);
+    setPlay(tracklist?.track_number);
+    getAlbum(tracklist?.album?.id);
+  }, [tracklist]);
   const [getCurrentPos, setCurrentPos] = React.useState(0);
   const func = event => {
     if (event.nativeEvent.contentOffset.x % width == 0) {
@@ -30,12 +39,12 @@ const Player = props => {
   const prev = () => {
     ref.current.scrollTo({x: getCurrentPos - width, y: 0, animated: true});
   };
-  const [value, onChange] = React.useState(60);
-  return props.tracklist.length > 0 ? (
+  const [value, onChange] = React.useState('60');
+  return tracklist.length > 0 ? (
     <View style={{flex: 1, backgroundColor: '#2f3640'}}>
       <View style={styles.view}>
         <Text style={styles.header}>Odtwarzanie z albumu</Text>
-        <Text style={styles.album}>{props.tracklist[play].album}</Text>
+        <Text style={styles.album}>{tracklist?.album?.name}</Text>
         <ScrollView
           ref={ref}
           style={styles.imageSlider}
@@ -45,7 +54,7 @@ const Player = props => {
           onScroll={func}
           showsHorizontalScrollIndicator={false}
           decelerationRate={'fast'}>
-          {props.tracklist.map((el, i) => (
+          {album.map((el, i) => (
             <View style={styles.imageContainer} key={i}>
               <Image source={el.image} style={styles.image}></Image>
             </View>
@@ -55,12 +64,12 @@ const Player = props => {
           <View>
             <ScrollView style={styles.descriptionContent} horizontal={true}>
               <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
-                {props.tracklist[play].title}
+                {album[play].title}
               </Text>
             </ScrollView>
             <ScrollView style={styles.descriptionContent} horizontal={true}>
               <Text numberOfLines={1} style={styles.artist}>
-                {props.tracklist[play].artist}
+                {"album[play].artist"}
               </Text>
             </ScrollView>
           </View>
@@ -76,7 +85,7 @@ const Player = props => {
         </View>
         <View style={styles.time}>
           <Text style={styles.timelapse}>1:56</Text>
-          <Text style={styles.timelapse}>2:25</Text>
+          <Text style={styles.timelapse}>{millisToMinutesAndSeconds(album[play].duration_ms)}</Text>
         </View>
         <Slider
           minimumTrackTintColor="#FB266E"
@@ -99,15 +108,27 @@ const Player = props => {
   ) : null;
 };
 
+Playlist.propTypes = {
+  tracklist: PropTypes.array,
+  album: PropTypes.array
+};
+
+Playlist.defaultProps = {
+  tracklist: [],
+  album: []
+};
+
 const mapStateToProps = state => {
   return {
     tracklist: state.tracklist,
+    album: state.album
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onInit: () => dispatch(actions.initTracklist()),
+    onInit: (id) => dispatch(actions.initTracklist(id)),
+    getAlbum: (id) => dispatch(actions.initAlbum(id)),
   };
 };
 

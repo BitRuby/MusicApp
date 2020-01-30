@@ -4,20 +4,20 @@ import Album from '../album/album';
 import styles from './carousel.style';
 import { Actions } from 'react-native-router-flux';
 const Carousel = props => {
-  const goToPlayer = () => {
-    Actions.player();
+  const goTo = (type, id) => {
+    type === "Playlist" ? Actions.playlist({id: id?.id}) : Actions.player({id: id});
   }
+  const {type, list, title} = props;
   return (
     <ScrollView
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       bounces={true}>
       <View style={styles.view}>
-        <Text style={styles.text}>{props.title}</Text>
+        <Text style={styles.text}>{title}</Text>
       </View>
-      {props.list.map((el, i) => (
-        <Album element={el} key={i} onPress={() => goToPlayer()}
-
+      {list.map((el, i) => (
+        <Album element={el} key={i} onPress={() => goTo(type, el)}
         />
       ))}
     </ScrollView>

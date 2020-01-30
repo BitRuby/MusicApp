@@ -5,6 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 import Element from '../element/element';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
+import PropTypes from "prop-types";
+
+
 const Favorites = props => {
   const [favIno, setFavIno] = React.useState({
     coverUrl: require('../../assets/images/1.jpg'),

@@ -6,6 +6,7 @@ import {Router, Stack, Scene} from 'react-native-router-flux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import Dashboard from './components/dashboard/dashboard';
 import Player from './components/player/player';
+import Playlist from './components/playlist/playlist';
 import Favorites from './components/favorites/favorites';
 import reducer from './store/reducers/reducer';
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -18,6 +19,7 @@ const App = () => {
           <Scene key="dashboard" component={Dashboard} initial />
           <Scene key="player" component={Player} />
           <Scene key="favorites" component={Favorites} />
+          <Scene key="playlist" component={Playlist} />
         </Stack>
       </Router>
     </Provider>

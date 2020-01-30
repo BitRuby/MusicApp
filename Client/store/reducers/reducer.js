@@ -5,6 +5,8 @@ const initialState = {
   playlist: [],
   tracklist: [],
   search: [],
+  album: [],
+  error: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -28,6 +30,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         search: action.search,
+      };
+    case actionTypes.SET_ALBUM:
+      return {
+        ...state,
+        album: action.album,
+      };
+    case actionTypes.API_ERROR:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;
