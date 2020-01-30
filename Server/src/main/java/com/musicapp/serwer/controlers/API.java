@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("api")
+@CrossOrigin("*")
 public class API {
 
     @Autowired
@@ -28,6 +28,8 @@ public class API {
     ArtistService artistService;
     @Autowired
     AlbumService albumService;
+    @Autowired
+    SearchService searchService;
 
     private Gson gson = new Gson();
 
@@ -159,26 +161,11 @@ public class API {
 
     @GetMapping(path = "/search/{name}")
     public ResponseEntity<String> getSearch(@PathVariable String name){
-        ArtistRes ar = new ArtistRes( name, "Łydka Grubasa");
-        AlbumRes al = new AlbumRes(name, "O-dur C-ból","ds");
-        TrackRes tr =  new TrackRes();
-        tr.setId(name);
-        tr.setAlbum(al);
-        tr.setArtist(ar);
-        tr.setDuration_ms(69420L);
-        tr.setHref("https://open.spotify.com/track/5YchihSamhn4REnnfW3ESJ");
-        tr.setTrack_number(13L);
-        tr.setType("Dzika Viksa");
-
-
-        ArrayList<Object> response = new ArrayList<>();
-        response.add(al);
-        response.add(ar);
-        response.add(tr);
+        SearchRes response = searchService.search(name);
 
         Gson gson = new Gson();
         String json = gson.toJson(response);
-        if(tr.getId().equals("0")){
+        if(response==null){
             json = "Nie znaleziono";
             return ResponseEntity.status(404).body(json);
         }
