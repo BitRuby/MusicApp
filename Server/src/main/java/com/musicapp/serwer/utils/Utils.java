@@ -14,7 +14,7 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  * Klasa zawiera medote odpowiedzialna za kokunikacje z API
  */
 public class Utils {
-    private static final String token = "BQBhjr1YXlnaJXvoOvnzSf8CpVqg111fO0nYBGsvo_JNDKIqyZlPAuV_wkW6d8Tid9PkeyY87T0AmgHezsZPFVrO_SzU1TaKVkyvJCH7CHZ3sHQK819Qij11ZON1H5uOmO5Hy46dCPmJaQfS28W_hVW2VQ0GQzA3Y0C0";
+    private static final String token = "BQDgVom-htA2GEqsoRtqq5AFTlWQvuRympVXKe__JuFlwbG9jhAV4XtfTApN2RCPwnohpLb1dlt_YE4Vmn1luXxME0kor61sjSkDoqEkKGleKk_A4HaOmsujptielykezVhpRvGF_Tun9EZTfo-rL7yjZDbhdch5iTEi";
 
     /**
      * Metoda zwraca odpowiedz od API Spotify.
