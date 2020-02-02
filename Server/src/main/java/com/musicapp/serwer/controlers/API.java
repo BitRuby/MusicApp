@@ -96,7 +96,7 @@ public class API {
      */
     @GetMapping(path = "/favorites/{n}")
     public ResponseEntity<String> getFavorites(@PathVariable int n) {
-        ArrayList<FavoriteRes> response = new ArrayList<> (favoriteService.getNtracks(n));
+        ArrayList<TrackRes> response = new ArrayList<> (favoriteService.getNtracks(n));
 
         Gson gson = new Gson();
         String json = gson.toJson(response);
@@ -113,7 +113,7 @@ public class API {
      */
     @GetMapping(path = "/favorites")
     public ResponseEntity<String> getFavorites() {
-        ArrayList<FavoriteRes> response = (ArrayList<FavoriteRes>) favoriteService.getAll();
+        ArrayList<TrackRes> response = (ArrayList<TrackRes>) favoriteService.getAllTrack();
 
         String json = gson.toJson(response);
         if (response.size() < 1) {
@@ -130,7 +130,7 @@ public class API {
      */
     @PostMapping(path = "/favorites")
     public ResponseEntity<String> postFavotires(@RequestParam(required = true) String id){
-        FavoriteRes response = favoriteService.findOne(id);
+        TrackRes response = favoriteService.findOne(id);
 
         Gson gson = new Gson();
         String json = gson.toJson(response);

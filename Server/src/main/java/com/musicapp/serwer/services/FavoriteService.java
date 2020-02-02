@@ -1,6 +1,7 @@
 package com.musicapp.serwer.services;
 
 import com.musicapp.serwer.model.response.FavoriteRes;
+import com.musicapp.serwer.model.response.TrackRes;
 import com.musicapp.serwer.repositories.FavoriteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ public class FavoriteService {
 
     @Autowired
     private FavoriteRepo favoriteRepo;
+    @Autowired
+    private TrackService trackService;
 
     /**
      * Metoda dodaje utwor do bazy
@@ -30,8 +33,29 @@ public class FavoriteService {
      * Metoda pobiera wszystkie ulubione utwory z bazy
      * @return  Lista ulubionych utworow
      */
-    public List<FavoriteRes> getAll() {
-        return favoriteRepo.findAll();
+        public List<FavoriteRes> getAll() {
+            return favoriteRepo.findAll();
+        }
+
+
+
+    /**
+     * Metoda pobiera wszystkie ulubione utwory z bazy wraz z dodatkowymi informacjami
+     * @return  Lista ulubionych utworow
+     */
+    public List<TrackRes> getAllTrack() {
+        StringBuilder url = new StringBuilder("https://api.spotify.com/v1/tracks?ids=");
+        if (favoriteRepo.findAll().size() > 0){
+            List<FavoriteRes> list = favoriteRepo.findAll();
+            for (int i = 0; i < list.size(); i++) {
+                url.append(list.get(i).getTrackID());
+                if (i < list.size() - 1) {
+                    url.append(",");
+                }
+            }
+            return trackService.searchTracksByIDs(url.toString());
+        }
+        return null;
     }
 
     /**
@@ -46,8 +70,13 @@ public class FavoriteService {
      * @param id id utworu
      * @return  ulubiony utwor
      */
-    public FavoriteRes findOne(String id){
-        return favoriteRepo.findOneByTrackID(id);
+    public TrackRes findOne(String id){
+        FavoriteRes fr = favoriteRepo.findOneByTrackID(id);
+        if(fr == null){
+            return null;
+        } else {
+            return trackService.searchTrackByID(id);
+        }
     }
 
     /**
@@ -55,10 +84,27 @@ public class FavoriteService {
      * @param n id utworu
      * @return  Zwraca n ulubionych
      */
-    public List<FavoriteRes> getNtracks(int n) {
-        if (favoriteRepo.findAll().size() < n)
-            return favoriteRepo.findAll();
-        else
-            return favoriteRepo.findAll().subList(0, n);
+    public List<TrackRes> getNtracks(int n) {
+        StringBuilder url = new StringBuilder("https://api.spotify.com/v1/tracks?ids=");
+        if (favoriteRepo.findAll().size() < n){
+            List<FavoriteRes> list = favoriteRepo.findAll();
+            for (int i = 0; i < list.size(); i++) {
+                url.append(list.get(i).getTrackID());
+                if (i < list.size() - 1) {
+                    url.append(",");
+                }
+            }
+            return trackService.searchTracksByIDs(url.toString());
+        }
+        else {
+            List<FavoriteRes> list = favoriteRepo.findAll().subList(0, n);
+            for (int i = 0; i < list.size(); i++) {
+                url.append(list.get(i).getTrackID());
+                if (i < list.size() - 1) {
+                    url.append(",");
+                }
+            }
+            return trackService.searchTracksByIDs(url.toString());
+        }
     }
 }
