@@ -200,7 +200,9 @@ public class API {
     @GetMapping(path = "/recommendations")
     public ResponseEntity<String> getRecommendation() {
         TrackRes response = recommendationService.getRecommendation();
-        String json = gson.toJson(response);
+        ArrayList<TrackRes> list = new ArrayList<>();
+        list.add(response);
+        String json = gson.toJson(list);
         if (response == null) {
             json = "Brak proponowanych utworow";
             return ResponseEntity.status(404).body(json);
@@ -246,12 +248,19 @@ public class API {
     /**
      * Endpoint służący dodaniw utworu do ulubionych
      * @param id id utworu
-     * @param name nazwa utworu
-     * @param img img albumu
      */
     @PostMapping(path = "/addTrack")
-    public void addOneTrack(@RequestParam(required = true) String id, @RequestParam(required = true) String name, @RequestParam(required = true) String img){
-        favoriteService.addTrack(id,name,img);
+    public void addOneTrack(@RequestParam(required = true) String id){
+        favoriteService.addTrack(id);
+    }
+
+    /**
+     * Endpoint służący usuwania utworu z ulubionych
+     * @param id id utworu
+     */
+    @PostMapping(path = "/dropTrack")
+    public void dropOneTrack(@RequestParam(required = true) String id){
+        favoriteService.dropTrack(id);
     }
 
     /**
@@ -259,12 +268,12 @@ public class API {
      */
     @GetMapping(path = "/addTracks")
     public void addSomeTracks(){
-        favoriteService.addTrack("63yesoRJgXT5QALryYFV0X","Boy","https://i.scdn.co/image/ab67616d0000b27399a3a1c380019cdc2ba9b8c2");
-        favoriteService.addTrack("2uZVfvOK7MTjBTRICYmpso","Birds (feat. Elisa)","https://i.scdn.co/image/f28b50cc1583b2627331e12d7ca3d1e4cb128875");
-        favoriteService.addTrack("3lPr8ghNDBLc2uZovNyLs9","Supermassive Black Hole","https://i.scdn.co/image/ab67616d0000b27328933b808bfb4cbbd0385400");
-        favoriteService.addTrack("5JHNg1hxZFT7TDEphhM4wj","Waiting for the End","https://i.scdn.co/image/ab67616d0000b27359211e56a493ac4509457bab");
-        favoriteService.addTrack("0bRQiJTHxIXb45d8uwTMlG","Never Go Away","https://i.scdn.co/image/33cfad468a9f3012df179d4d5f31e3af37411e5b");
-        favoriteService.addTrack("4xrzG4pw9JN8BJqqjurcPs","Gold","https://i.scdn.co/image/43dbaac0e5a97829636db85d838271e214e762ff");
+        favoriteService.addTrack("63yesoRJgXT5QALryYFV0X");
+        favoriteService.addTrack("2uZVfvOK7MTjBTRICYmpso");
+        favoriteService.addTrack("3lPr8ghNDBLc2uZovNyLs9");
+        favoriteService.addTrack("5JHNg1hxZFT7TDEphhM4wj");
+        favoriteService.addTrack("0bRQiJTHxIXb45d8uwTMlG");
+        favoriteService.addTrack("4xrzG4pw9JN8BJqqjurcPs");
     }
 
     /**
