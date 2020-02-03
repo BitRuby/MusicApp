@@ -6,8 +6,8 @@ const Album = props => {
   return (
     <TouchableOpacity onPress={() => onPress()}>
       <View style={styles.view}>
-        <Image style={styles.image} source={{uri: element.imgCover}}></Image>
-        <Text style={styles.title}>{element.name}</Text>
+        <Image style={styles.image} source={{uri: element?.album?.img || element?.imgCover}}></Image>
+        <Text style={styles.title}>{element?.title || element?.name}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -5,7 +5,7 @@ const initialState = {
   playlist: [],
   tracklist: [],
   search: [],
-  album: [],
+  album: {},
   error: {}
 };
 

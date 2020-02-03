@@ -12,7 +12,7 @@ export const setPlaylist = playlist => {
 export const initPlaylist = () => async dispatch => {
   return new Promise(() => {
     axios
-      .get("http://192.168.0.55:8075/api/playlists/10")
+      .get(`http://192.168.0.55:8075/api/playlists/10`)
       .then(response => {
         dispatch(setPlaylist(response.data));
       })

@@ -4,8 +4,8 @@ import Album from '../album/album';
 import styles from './carousel.style';
 import { Actions } from 'react-native-router-flux';
 const Carousel = props => {
-  const goTo = (type, id) => {
-    type === "Playlist" ? Actions.playlist({id: id?.id}) : Actions.player({id: id});
+  const goTo = (type, data) => {
+    type === "Playlist" ? Actions.playlist({id: data?.id}) : Actions.player({trackId: data?.track_number, albumId: data?.album?.id});
   }
   const {type, list, title} = props;
   return (

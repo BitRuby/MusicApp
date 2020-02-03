@@ -5,6 +5,7 @@ import Element from "../element/element";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import PropTypes from "prop-types";
+import { Actions } from "react-native-router-flux";
 
 const Search = props => {
   const list = [];
@@ -12,6 +13,9 @@ const Search = props => {
   React.useEffect(() => {
     value.length >= 3 ? onSearch(value) : "";
   }, [value]);
+  const goTo = el => {
+    Actions.player({ trackId: el?.track_number, albumId: el?.album?.id });
+  };
   return (
     <View>
       {props.value ? (
@@ -21,7 +25,7 @@ const Search = props => {
             <ScrollView>
               <Text style={styles.title}>Utwory</Text>
               {search?.trackList?.map((el, i) => (
-                <Element key={i} el={el} />
+                <Element key={i} el={el} onPress={() => goTo(el)} />
               ))}
             </ScrollView>
           )}
@@ -30,7 +34,7 @@ const Search = props => {
         <ScrollView>
           <Text style={styles.title}>Ostatnio wyszukiwane</Text>
           {list.map((el, i) => (
-            <Element key={i} el={el} />
+            <Element key={i} el={el} onPress={() => goTo(el)} />
           ))}
         </ScrollView>
       )}

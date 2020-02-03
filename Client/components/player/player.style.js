@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageSlider: {
-    maxHeight: 300,
+    maxHeight: 400,
   },
   imageContainer: {
     width: width,

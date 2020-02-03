@@ -11,7 +11,7 @@ export const setFavorites = favorites => {
 export const initFavorites = () => async dispatch => {
   return new Promise(() => {
     axios
-      .get("http://192.168.0.55:8075/api/favorites/5")
+      .get(`http://192.168.0.55:8075/api/favorites/5`)
       .then(response => {
         dispatch(setFavorites(response.data));
       })

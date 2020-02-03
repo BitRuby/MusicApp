@@ -11,32 +11,35 @@ import {
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { FontAwesome } from "@expo/vector-icons";
-import { Actions } from "react-native-router-flux";
 import PropTypes from "prop-types";
 
 const Player = props => {
+  const { trackId, albumId, initAlbum, album } = props;
   const width = Dimensions.get("window").width;
   const ref = React.createRef();
   const [play, setPlay] = React.useState(0);
-  const { id, onInit, tracklist, album } = props;
-
-  onInit("63yesoRJgXT5QALryYFV0X");
-  React.useEffect(() => {
-    const [number] = tracklist?.filter(e => {
-      e.id === "63yesoRJgXT5QALryYFV0X";
-    });
-    setPlay(number?.id);
-  }, [tracklist]);
   const [getCurrentPos, setCurrentPos] = React.useState(0);
-  const func = event => {
+  const [value, onChange] = React.useState(0);
+  React.useEffect(() => {
+    initAlbum(albumId);
+    setPlay(trackId);
+    setPositionTo(trackId-1);
+  }, []);
+  const updateScrollPosition = event => {
     if (event.nativeEvent.contentOffset.x % width == 0) {
       if (getCurrentPos > event.nativeEvent.contentOffset.x) {
         setPlay(play - 1);
       } else if (getCurrentPos < event.nativeEvent.contentOffset.x) {
         setPlay(play + 1);
       }
-      setCurrentPos(event.nativeEvent.contentOffset.x);
     }
+  };
+  const setPositionTo = page => {
+    ref.current.scrollTo({
+      x: getCurrentPos + width * page,
+      y: 0,
+      animated: false
+    });
   };
   const next = () => {
     ref.current.scrollTo({ x: getCurrentPos + width, y: 0, animated: true });
@@ -44,55 +47,64 @@ const Player = props => {
   const prev = () => {
     ref.current.scrollTo({ x: getCurrentPos - width, y: 0, animated: true });
   };
-  const [value, onChange] = React.useState(60);
-  return  (
+  return (
     <View style={{ flex: 1, backgroundColor: "#2f3640" }}>
       <View style={styles.view}>
         <Text style={styles.header}>Odtwarzanie z albumu</Text>
-        <Text style={styles.album}>{album?.album?.name}</Text>
+        <Text style={styles.album}>{album?.name}</Text>
         <ScrollView
           ref={ref}
           style={styles.imageSlider}
           horizontal={true}
           scrollEventThrottle={16}
           pagingEnabled={true}
-          onScroll={func}
+          onScroll={updateScrollPosition}
           showsHorizontalScrollIndicator={false}
           decelerationRate={"fast"}
         >
-          {/* {tracklist?.map((el, i) => (
+          {album?.content?.map((el, i) => (
             <View style={styles.imageContainer} key={i}>
-              <Image source={{uri: album?.album?.url}} style={styles.image}></Image>
+              <Image source={{ uri: album?.img }} style={styles.image}></Image>
+              <View style={styles.description}>
+                <View>
+                  <ScrollView
+                    style={styles.descriptionContent}
+                    horizontal={true}
+                  >
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                      style={styles.title}
+                    >
+                      {el?.title}
+                    </Text>
+                  </ScrollView>
+                  <ScrollView
+                    style={styles.descriptionContent}
+                    horizontal={true}
+                  >
+                    <Text numberOfLines={1} style={styles.artist}>
+                      {el?.artist?.name}
+                    </Text>
+                  </ScrollView>
+                </View>
+                <View>
+                  <FontAwesome
+                    name="heart"
+                    style={styles.heartIcon}
+                    size={18}
+                    color="#777"
+                    solid
+                  />
+                </View>
+              </View>
+              <View style={styles.time}>
+                <Text style={styles.timelapse}>0:00</Text>
+                <Text style={styles.timelapse}>0:30</Text>
+              </View>
             </View>
-          ))} */}
+          ))}
         </ScrollView>
-        <View style={styles.description}>
-          <View>
-            <ScrollView style={styles.descriptionContent} horizontal={true}>
-              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
-                {tracklist[play]?.title}
-              </Text>
-            </ScrollView>
-            <ScrollView style={styles.descriptionContent} horizontal={true}>
-              <Text numberOfLines={1} style={styles.artist}>
-                {tracklist[play]?.artist?.name}
-              </Text>
-            </ScrollView>
-          </View>
-          <View>
-            <FontAwesome
-              name="heart"
-              style={styles.heartIcon}
-              size={18}
-              color="#777"
-              solid
-            />
-          </View>
-        </View>
-        <View style={styles.time}>
-          <Text style={styles.timelapse}>1:56</Text>
-          <Text style={styles.timelapse}>2:25</Text>
-        </View>
         <Slider
           minimumTrackTintColor="#FB266E"
           maximumTrackTintColor="#777"
@@ -111,45 +123,45 @@ const Player = props => {
         </View>
       </View>
     </View>
-  ) ;
+  );
 };
 
-const AlbumType = {
+const ContentType = PropTypes.shape({
   title: PropTypes.string,
-  album: {
-    id: PropTypes.string,
-    name: PropTypes.string,
-    img: PropTypes.string,
-  },
   artist: {
     id: PropTypes.string,
-    name: PropTypes.string,
+    name: PropTypes.string
   },
   id: PropTypes.string,
   duration_ms: PropTypes.number,
   href: PropTypes.string,
   track_number: PropTypes.number,
-  type: PropTypes.string,
-}
+  type: PropTypes.string
+});
+
+const AlbumType = PropTypes.shape({
+  id: PropTypes.string,
+  name: PropTypes.string,
+  img: PropTypes.string,
+  content: PropTypes.arrayOf(ContentType)
+});
 
 Player.propTypes = {
-  tracklist: PropTypes.array,
-  album: PropTypes.shape(AlbumType)
+  album: PropTypes.objectOf(AlbumType)
 };
 
 Player.defaultProps = {
-  tracklist: [],
   album: {}
 };
 
 const mapStateToProps = state => {
   return {
-    tracklist: state.tracklist
+    album: state.album
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onInit: id => dispatch(actions.initTracklist(id))
+    initAlbum: id => dispatch(actions.initAlbum(id))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -4,7 +4,6 @@ import styles from "./playlist.style";
 import { FontAwesome } from "@expo/vector-icons";
 import Element from "../element/element";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/index";
 import PropTypes from "prop-types";
 import { Actions } from "react-native-router-flux";
 
@@ -16,7 +15,7 @@ const Playlist = props => {
   const [play, setPlaylist] = React.useState([]);
   const back = () => {
     Actions.pop();
-  }
+  };
   React.useEffect(() => {
     const [el] = playlist?.filter(e => {
       return e.id === id;
@@ -27,13 +26,21 @@ const Playlist = props => {
       quantity: el?.content?.length + " utworów"
     });
   }, [playlist, id]);
+  const goTo = (el) => {
+    Actions.player({trackId: el?.track_number, albumId: el?.album?.id});
+  }
   const { id, playlist } = props;
   return (
     <View style={{ flex: 1, backgroundColor: "#2f3640" }}>
       <Image source={favIno.coverUrl} style={styles.cover}></Image>
       <View style={styles.innerFrame}></View>
       <View style={styles.headerIcon}>
-        <FontAwesome name="arrow-left" size={20} color="#FFF" onPress={() => back()} />
+        <FontAwesome
+          name="arrow-left"
+          size={20}
+          color="#FFF"
+          onPress={() => back()}
+        />
       </View>
       <View style={styles.headerText}>
         <Text style={styles.title}>{play.name}</Text>
@@ -41,19 +48,19 @@ const Playlist = props => {
       </View>
       <ScrollView>
         {play?.content?.map((el, i) => (
-          <Element key={i} el={el} />
+          <Element key={i} el={el} onPress={() => goTo(el)} />
         ))}
       </ScrollView>
     </View>
   );
 };
 
-const PlaylistType = {
+const PlaylistType = PropTypes.shape({
   id: PropTypes.string,
   name: PropTypes.string,
   content: PropTypes.array,
   imgCover: PropTypes.string
-};
+});
 
 Playlist.propTypes = {
   playlist: PropTypes.arrayOf(PlaylistType)
