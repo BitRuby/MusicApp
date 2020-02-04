@@ -39,6 +39,7 @@ public class API {
 
     /**
      * Endpoint służący do pobierania playlisty o podanym id
+     *
      * @param id id playlisty
      * @return Zwraca palyliste.
      */
@@ -56,6 +57,7 @@ public class API {
 
     /**
      * Endpoint służący do pobierania kilku playlist
+     *
      * @param n id playlisty
      * @return Zwraca n playlist.
      */
@@ -74,6 +76,7 @@ public class API {
 
     /**
      * Endpoint służący do pobierania wszystkich playlist
+     *
      * @return Zwraca wszystkie playlist.
      */
     @GetMapping(path = "/playlists")
@@ -91,12 +94,13 @@ public class API {
 
     /**
      * Endpoint służący do pobierania n ulubionych utworow
+     *
      * @param n ilosc utworow
      * @return Zwraca n ulubionych utworow.
      */
     @GetMapping(path = "/favorites/{n}")
     public ResponseEntity<String> getFavorites(@PathVariable int n) {
-        ArrayList<TrackRes> response = new ArrayList<> (favoriteService.getNtracks(n));
+        ArrayList<TrackRes> response = new ArrayList<>(favoriteService.getNtracks(n));
 
         Gson gson = new Gson();
         String json = gson.toJson(response);
@@ -109,6 +113,7 @@ public class API {
 
     /**
      * Endpoint służący do pobierania wszystkich ulubionych utworow
+     *
      * @return Zwraca wszystkie ulubionych utworow.
      */
     @GetMapping(path = "/favorites")
@@ -125,11 +130,12 @@ public class API {
 
     /**
      * Endpoint służący do pobierania konkretnego utworu
+     *
      * @param id id utworu
      * @return Zwraca ulubiony utwor
      */
     @PostMapping(path = "/favorites")
-    public ResponseEntity<String> postFavotires(@RequestParam(required = true) String id){
+    public ResponseEntity<String> postFavotires(@RequestParam(required = true) String id) {
         TrackRes response = favoriteService.findOne(id);
 
         Gson gson = new Gson();
@@ -140,16 +146,18 @@ public class API {
         }
         return ResponseEntity.ok(json);
     }
+
     /**
      * Endpoint służący do pobierania informacji o utworze
+     *
      * @param id id utworu
      * @return Zwraca dane utworu
      */
     @GetMapping(path = "/track/{id}")
-    public ResponseEntity<String> getTrack(@PathVariable String id){
+    public ResponseEntity<String> getTrack(@PathVariable String id) {
         TrackRes response = trackService.searchTrackByID(id);
         String json = gson.toJson(response);
-        if(response==null || response.getId().equals("0")){
+        if (response == null || response.getId().equals("0")) {
             json = null;
             json = "Nie znaleziono utworu";
             return ResponseEntity.status(404).body(json);
@@ -159,15 +167,16 @@ public class API {
 
     /**
      * Endpoint służący do pobierania listy utrorow na podstawie id albumu
+     *
      * @param id id albumu
      * @return Zwraca liste utorow
      */
     @GetMapping(path = "/trackByAlbum/{id}")
-    public ResponseEntity<String> getTrackByAlbum(@PathVariable String id){
+    public ResponseEntity<String> getTrackByAlbum(@PathVariable String id) {
         List<TrackRes> response = trackService.searchTrackByAlbumID(id);
         String json = gson.toJson(response);
 
-        if(response==null){
+        if (response == null) {
             json = null;
             json = "Nie znaleziono utworu";
             return ResponseEntity.status(404).body(json);
@@ -177,15 +186,16 @@ public class API {
 
     /**
      * Endpoint służący do pobierania informacji o artyscie
+     *
      * @param id id artysty
      * @return Zwraca dane artysty
      */
     @GetMapping(path = "/artist/{id}")
-    public ResponseEntity<String> getArtist(@PathVariable String id){
+    public ResponseEntity<String> getArtist(@PathVariable String id) {
         ArtistRes returnValue = artistService.searchArtistByID(id);
         Gson gson = new Gson();
         String json = gson.toJson(returnValue);
-        if(returnValue == null){
+        if (returnValue == null) {
             json = "Nie znaleziono albumu";
             return ResponseEntity.status(404).body(json);
         }
@@ -195,6 +205,7 @@ public class API {
 
     /**
      * Endpoint służący do pobrania rekomendowanego utworu
+     *
      * @return Zwraca rekomendowany utwor
      */
     @GetMapping(path = "/recommendations")
@@ -212,15 +223,16 @@ public class API {
 
     /**
      * Endpoint służący do pobierania informacji o albumie
+     *
      * @param id id artysty
      * @return Zwraca dane artysty
      */
     @GetMapping(path = "/album/{id}")
-    public ResponseEntity<String> getAlbum(@PathVariable String id){
+    public ResponseEntity<String> getAlbum(@PathVariable String id) {
         AlbumRes returnValue = albumService.searchAlbumByID(id);
         Gson gson = new Gson();
         String json = gson.toJson(returnValue);
-        if(returnValue == null){
+        if (returnValue == null) {
             json = "Nie znaleziono albumu";
             return ResponseEntity.status(404).body(json);
         }
@@ -229,16 +241,17 @@ public class API {
 
     /**
      * Endpoint służący do pobierania utworow na podstawie nazwy z API
+     *
      * @param name nazwa szukanego utworu
      * @return Zwraca utwory o podanej nazwie
      */
     @GetMapping(path = "/search/{name}")
-    public ResponseEntity<String> getSearch(@PathVariable String name){
+    public ResponseEntity<String> getSearch(@PathVariable String name) {
         SearchRes response = searchService.search(name);
 
         Gson gson = new Gson();
         String json = gson.toJson(response);
-        if(response==null){
+        if (response == null) {
             json = "Nie znaleziono";
             return ResponseEntity.status(404).body(json);
         }
@@ -247,19 +260,22 @@ public class API {
 
     /**
      * Endpoint służący dodaniw utworu do ulubionych
+     *
      * @param id id utworu
      */
     @PostMapping(path = "/addTrack")
-    public void addOneTrack(@RequestParam(required = true) String id){
+    public void addOneTrack(@RequestParam(required = true) String id) {
+        System.out.println("add one track");
         favoriteService.addTrack(id);
     }
 
     /**
      * Endpoint służący usuwania utworu z ulubionych
+     *
      * @param id id utworu
      */
     @PostMapping(path = "/dropTrack")
-    public void dropOneTrack(@RequestParam(required = true) String id){
+    public void dropOneTrack(@RequestParam(required = true) String id) {
         favoriteService.dropTrack(id);
     }
 
@@ -267,7 +283,8 @@ public class API {
      * Endpoint służący do dodania przykladowych utworow do bazy
      */
     @GetMapping(path = "/addTracks")
-    public void addSomeTracks(){
+    public void addSomeTracks() {
+        System.out.println("add example track");
         favoriteService.addTrack("63yesoRJgXT5QALryYFV0X");
         favoriteService.addTrack("2uZVfvOK7MTjBTRICYmpso");
         favoriteService.addTrack("3lPr8ghNDBLc2uZovNyLs9");
@@ -280,7 +297,7 @@ public class API {
      * Endpoint służący do usuniecia wszystkich utworow z bazy
      */
     @GetMapping(path = "/dropAllTracks")
-    public void deleteAllTracks(){
+    public void deleteAllTracks() {
         favoriteService.dropAll();
     }
 
@@ -288,7 +305,7 @@ public class API {
      * Endpoint służący do dodania przykładowych playlist do bazy
      */
     @GetMapping(path = "/addPlaylists")
-    public void addSomePlaylists(){
+    public void addSomePlaylists() {
         playlistService.addPlaylist("3fPG8zDPmtahUJkmdq3OSX");
         playlistService.addPlaylist("37i9dQZF1DX6GJVEkXUD2r");
     }
@@ -297,12 +314,9 @@ public class API {
      * Endpoint służący do usuniecia wszystkich playlist z bazy
      */
     @GetMapping(path = "/dropAllPlaylists")
-    public void deleteAllPlaylists(){
+    public void deleteAllPlaylists() {
         playlistService.dropAll();
     }
-
-
-
 
 
 }

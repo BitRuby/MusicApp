@@ -7,7 +7,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.musicapp.serwer.model.response.AlbumRes;
 import com.musicapp.serwer.model.response.ArtistRes;
+import com.musicapp.serwer.model.response.FavoriteRes;
 import com.musicapp.serwer.model.response.TrackRes;
+import com.musicapp.serwer.repositories.FavoriteRepo;
 import com.musicapp.serwer.repositories.TrackRepo;
 import com.musicapp.serwer.utils.Utils;
 import org.apache.tomcat.util.json.JSONParser;
@@ -31,6 +33,9 @@ public class TrackService {
 
     @Autowired
     private TrackRepo trackRepo;
+    @Autowired
+    private FavoriteRepo favoriteRepo;
+
     Gson dzejson = new Gson();
     String url = "https://api.spotify.com/v1/tracks/";
 
@@ -61,7 +66,6 @@ public class TrackService {
         }
         result = JsonToTrackRes(jsonObject);
         System.out.println(result);
-//        result = dzejson.fromJson(json, TrackRes.class);
         System.out.println(response);
         return result;
     }
@@ -78,6 +82,7 @@ public class TrackService {
      */
     private TrackRes JsonToTrackRes(JSONObject json) {
         TrackRes result = new TrackRes();
+
         try {
             result.setId(json.getString("id"));
             result.setType(json.getString("type"));
@@ -88,6 +93,11 @@ public class TrackService {
             result.setArtist(new ArtistRes(json.getJSONArray("artists").getJSONObject(0).getString("id"), json.getJSONArray("artists").getJSONObject(0).getString("name")));
             result.setAlbum(new AlbumRes(json.getJSONObject("album").getString("id"), json.getJSONObject("album").getString("name"),
                     json.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url")));
+            FavoriteRes tmp = favoriteRepo.findOneByTrackID(result.getId());
+            if(tmp.getName()!=null){
+                result.setFavorites(true);
+            }
+            else result.setFavorites(false);
         } catch (Exception e) {
             System.out.println("Dżejson się źle przepisał :/");
             System.out.println(e);
@@ -122,7 +132,6 @@ public class TrackService {
         }
         result = jsonToTrackList(jsonObject);
         System.out.println(result);
-//        result = dzejson.fromJson(json, TrackRes.class);
         System.out.println(response);
         return result;
     }
@@ -146,13 +155,17 @@ public class TrackService {
                 result.setTrack_number(array.getJSONObject(i).getLong("track_number"));
                 result.setTitle(array.getJSONObject(i).getString("name"));
                 result.setArtist(new ArtistRes(array.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("id"), array.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("name")));
+                FavoriteRes tmp = favoriteRepo.findOneByTrackID(result.getId());
+                if(tmp.getName()!=null){
+                    result.setFavorites(true);
+                }
+                else result.setFavorites(false);
                 list.add(result);
             }
         } catch (Exception e) {
             System.out.println("Dżejson się źle przepisał :/");
             System.out.println(e);
         }
-
         return list;
     }
 
@@ -181,7 +194,6 @@ public class TrackService {
         }
         result = jsonToList(jsonObject);
         System.out.println(result);
-//        result = dzejson.fromJson(json, TrackRes.class);
         System.out.println(response);
         return result;
     }
@@ -209,6 +221,11 @@ public class TrackService {
                 result.setArtist(new ArtistRes(obj.getJSONArray("artists").getJSONObject(0).getString("id"), obj.getJSONArray("artists").getJSONObject(0).getString("name")));
                 result.setAlbum(new AlbumRes(obj.getJSONObject("album").getString("id"), obj.getJSONObject("album").getString("name"),
                         obj.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url")));
+                FavoriteRes tmp = favoriteRepo.findOneByTrackID(result.getId());
+                if(tmp.getName()!=null){
+                    result.setFavorites(true);
+                }
+                else result.setFavorites(false);
             list.add(result);
             }
         } catch (Exception e) {
@@ -217,6 +234,5 @@ public class TrackService {
         }
         return list;
     }
-
 
 }

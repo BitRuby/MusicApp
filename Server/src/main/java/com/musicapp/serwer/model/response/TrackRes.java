@@ -4,22 +4,42 @@ package com.musicapp.serwer.model.response;
  * Klasa modelu utworu
  */
 public class TrackRes {
-    /** tytul utworu. */
+    /**
+     * tytul utworu.
+     */
     private String title;
-    /** nazwa walbumu. */
+    /**
+     * nazwa walbumu.
+     */
     private AlbumRes album;
-    /** nazwa artysty. */
+    /**
+     * nazwa artysty.
+     */
     private ArtistRes artist;
-    /** id utworu. */
+    /**
+     * id utworu.
+     */
     private String id;
-    /** dlugosc utworu. */
+    /**
+     * dlugosc utworu.
+     */
     private Long duration_ms;
-    /** link do utworu. */
+    /**
+     * link do utworu.
+     */
     private String href;
-    /** numer utworu na plycie. */
+    /**
+     * numer utworu na plycie.
+     */
     private long track_number;
-    /** typ. */
+    /**
+     * typ.
+     */
     private String type;
+    /**
+     * ulubione.
+     */
+    private boolean favorites;
 
     public TrackRes() {
     }
@@ -97,5 +117,13 @@ public class TrackRes {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(boolean favorites) {
+        this.favorites = favorites;
     }
 }
