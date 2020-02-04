@@ -3,8 +3,10 @@ package com.musicapp.serwer.controlers;
 import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
 import com.musicapp.serwer.services.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -263,9 +265,9 @@ public class API {
      *
      * @param id id utworu
      */
-    @PostMapping(path = "/addTrack")
-    public void addOneTrack(@RequestParam(required = true) String id) {
-        System.out.println("add one track");
+    @PostMapping(path = "/addTrack", consumes = "application/json")
+    public void addOneTrack(@RequestBody(required = true) String id) {
+        System.out.println("add one track:");
         favoriteService.addTrack(id);
     }
 

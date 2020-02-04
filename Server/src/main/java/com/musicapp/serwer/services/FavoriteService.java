@@ -4,6 +4,9 @@ import com.musicapp.serwer.model.response.FavoriteRes;
 import com.musicapp.serwer.model.response.TrackRes;
 import com.musicapp.serwer.repositories.FavoriteRepo;
 import com.musicapp.serwer.repositories.TrackRepo;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +28,17 @@ public class FavoriteService {
     /**
      * Metoda dodaje utwor do bazy
      *
-     * @param id id utworu
+     * @param json id utworu
      */
-    public void addTrack(String id) {
+    public void addTrack(String json) {
+        String id = "";
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            id = jsonObject.getString("id");
+            System.out.println(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if (favoriteRepo.findOneByTrackID(id) == null) {
             TrackRes ts = trackService.searchTrackByID(id);
             if (ts.getTitle() != null)
