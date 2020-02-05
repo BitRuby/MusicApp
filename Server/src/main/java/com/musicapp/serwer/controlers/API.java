@@ -266,17 +266,19 @@ public class API {
      *
      * @param id id utworu
      */
-    @PostMapping(path = "/addTrack", consumes = "application/json")
+    @PostMapping(path = "/addTrack", consumes = "application/x-www-form-urlencoded")
     public void addOneTrack(@RequestBody(required = true) String id) {
-        System.out.println("add one track:");
-        String idTrack = "";
-        try {
-            JSONObject jsonObject = new JSONObject(id);
-            idTrack = jsonObject.getString("id");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        favoriteService.addTrack(idTrack);
+        System.out.println("add one track:" + id);
+        id = id.replace("id=","");
+//        String idTrack = "";
+//        try {
+//            JSONObject jsonObject = new JSONObject(id);
+//            idTrack = jsonObject.getString("id");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        favoriteService.addTrack(id);
     }
 
     /**
