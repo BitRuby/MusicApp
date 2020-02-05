@@ -3,6 +3,7 @@ package com.musicapp.serwer.controlers;
 import com.google.gson.Gson;
 import com.musicapp.serwer.model.response.*;
 import com.musicapp.serwer.services.*;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -268,7 +269,14 @@ public class API {
     @PostMapping(path = "/addTrack", consumes = "application/json")
     public void addOneTrack(@RequestBody(required = true) String id) {
         System.out.println("add one track:");
-        favoriteService.addTrack(id);
+        String idTrack = "";
+        try {
+            JSONObject jsonObject = new JSONObject(id);
+            idTrack = jsonObject.getString("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        favoriteService.addTrack(idTrack);
     }
 
     /**

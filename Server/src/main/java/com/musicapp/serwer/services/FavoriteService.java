@@ -28,17 +28,9 @@ public class FavoriteService {
     /**
      * Metoda dodaje utwor do bazy
      *
-     * @param json id utworu
+     * @param id id utworu
      */
-    public void addTrack(String json) {
-        String id = "";
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            id = jsonObject.getString("id");
-            System.out.println(jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void addTrack(String id) {
         if (favoriteRepo.findOneByTrackID(id) == null) {
             TrackRes ts = trackService.searchTrackByID(id);
             if (ts.getTitle() != null)
