@@ -6,7 +6,8 @@ import {
   Image,
   Slider,
   ScrollView,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from "react-native";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
@@ -14,7 +15,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
 const Player = props => {
-  const { trackId, albumId, initAlbum, album } = props;
+  const { trackId, albumId, initAlbum, album, addToFavorites } = props;
   const width = Dimensions.get("window").width;
   const ref = React.createRef();
   const [play, setPlay] = React.useState(0);
@@ -23,7 +24,7 @@ const Player = props => {
   React.useEffect(() => {
     initAlbum(albumId);
     setPlay(trackId);
-    setPositionTo(trackId-1);
+    setPositionTo(trackId - 1);
   }, []);
   const updateScrollPosition = event => {
     if (event.nativeEvent.contentOffset.x % width == 0) {
@@ -89,13 +90,15 @@ const Player = props => {
                   </ScrollView>
                 </View>
                 <View>
-                  <FontAwesome
-                    name="heart"
-                    style={styles.heartIcon}
-                    size={18}
-                    color="#777"
-                    solid
-                  />
+                  <TouchableOpacity onPress={() => addToFavorites(el?.id)}>
+                    <FontAwesome
+                      name="heart"
+                      style={styles.heartIcon}
+                      size={18}
+                      color="#777"
+                      solid
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.time}>
@@ -161,7 +164,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    initAlbum: id => dispatch(actions.initAlbum(id))
+    initAlbum: id => dispatch(actions.initAlbum(id)),
+    addToFavorites: id => dispatch(actions.addToFavorites(id))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

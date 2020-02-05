@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   favorites: [],
@@ -6,7 +6,8 @@ const initialState = {
   tracklist: [],
   search: [],
   album: {},
-  error: {}
+  error: {},
+  recommended: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,32 +15,42 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SET_FAVORITES:
       return {
         ...state,
-        favorites: action.favorites,
+        favorites: action.favorites
       };
     case actionTypes.SET_PLAYLIST:
       return {
         ...state,
-        playlist: action.playlist,
+        playlist: action.playlist
       };
     case actionTypes.SET_TRACKLIST:
       return {
         ...state,
-        tracklist: action.tracklist,
+        tracklist: action.tracklist
       };
     case actionTypes.SET_SEARCH:
       return {
         ...state,
-        search: action.search,
+        search: action.search
       };
     case actionTypes.SET_ALBUM:
       return {
         ...state,
-        album: action.album,
+        album: action.album
+      };
+    case actionTypes.SET_RECOMMENDED:
+      return {
+        ...state,
+        recommended: action.recommended
       };
     case actionTypes.API_ERROR:
       return {
         ...state,
-        error: action.error,
+        error: action.error
+      };
+    case actionTypes.API_SUCCESS:
+      return {
+        ...state,
+        success: action.success
       };
     default:
       return state;

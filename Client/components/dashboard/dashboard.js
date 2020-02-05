@@ -13,9 +13,10 @@ const Dashboard = props => {
   const [focused, onFocus] = React.useState(false);
   const [value, onChange] = React.useState("");
   useEffect(() => {
-    const { getPlaylists, getFavorites } = props;
+    const { getPlaylists, getFavorites, getRecommend } = props;
     getPlaylists();
     getFavorites();
+    getRecommend();
     BackHandler.addEventListener("hardwareBackPress", backButtonPress);
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", backButtonPress);
@@ -25,7 +26,7 @@ const Dashboard = props => {
     Keyboard.dismiss();
     onChange("");
   };
-  const { playlist, favorites } = props;
+  const { playlist, favorites, recommended } = props;
   return (
     <View style={{ flex: 1, backgroundColor: "#2f3640" }}>
       <View style={styles.view}>
@@ -39,8 +40,9 @@ const Dashboard = props => {
           <Search value={value} onChange={onChange} />
         ) : (
           <View style={{ flex: 1 }}>
-            <ScrollView>
+            <ScrollView  style={{ flex: 1 }}>
               <Carousel title="Playlisty" list={playlist} type="Playlist"/>
+              <Carousel title="Polecane" list={recommended} type="Recommended"/>
               <Carousel title="Ulubione" list={favorites} type="Favorites"/>
             </ScrollView>
             <PlayerWidget title={"Whatsername"} artist={"Green Day"} />
@@ -53,25 +55,29 @@ const Dashboard = props => {
 
 Dashboard.propTypes = {
   playlist: PropTypes.array,
-  favorites: PropTypes.array
+  favorites: PropTypes.array,
+  recommended: PropTypes.array
 };
 
 Dashboard.defaultProps = {
   playlist: [],
-  favorites: []
+  favorites: [],
+  recommended: []
 };
 
 const mapStateToProps = state => {
   return {
     playlist: state.playlist,
-    favorites: state.favorites
+    favorites: state.favorites,
+    recommended: state.recommended
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getPlaylists: () => dispatch(actions.initPlaylist()),
-    getFavorites: () => dispatch(actions.initFavorites())
+    getFavorites: () => dispatch(actions.initFavorites()),
+    getRecommend: () => dispatch(actions.initRecommend()),
   };
 };
 
